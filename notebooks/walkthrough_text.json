@@ -18,7 +18,8 @@
       "brand_equal": "Brand agreement",
       "price_comparable": "Comparable prices",
       "title_compact_exact": "Equal compact titles",
-      "native_model_compact_exact": "Equal compact model numbers"
+      "native_model_compact_exact": "Equal compact model numbers",
+      "native_model_same_letters_different_digits": "Same model letters, different digits"
     },
     "label_rejected": "The evaluation input rejected a target label, as expected.",
     "label_accepted": "The evaluation input incorrectly accepted a target label.",
@@ -34,13 +35,21 @@
       "core_tests": "Core tests recorded with the replay",
       "fixed_artifact_replay_cli_commands": "Commands in the existing-weight replay",
       "independently_checked_result_groups": "Independently checked result groups",
-      "max_prediction_difference": "Maximum prediction difference",
+      "max_prediction_difference": "Saved replay: maximum prediction difference",
       "new_training_in_replay": "New training during the replay",
       "fresh_training_reproduced": "Full retraining validated"
     },
     "yes": "yes",
     "no": "no",
-    "done": "Completed: public aggregates and synthetic examples only; no model libraries, product dataset, inference or training."
+    "done": "Walkthrough complete: aggregate arithmetic and synthetic feature/metric examples.",
+    "f1_c0": "F1 difference versus C0 at separately calibrated cutoffs",
+    "error_counts": "saved error counts",
+    "case": "Synthetic input",
+    "cases": {
+      "same_model": "Same model number",
+      "different_model": "Different model digits",
+      "different_currency": "Different currency"
+    }
   },
   "zh-CN": {
     "task": "任务：判断两家零售商的商品记录是否指向同一商品。",
@@ -61,7 +70,8 @@
       "brand_equal": "品牌一致",
       "price_comparable": "价格可比较",
       "title_compact_exact": "紧凑标题完全一致",
-      "native_model_compact_exact": "紧凑型号完全一致"
+      "native_model_compact_exact": "紧凑型号完全一致",
+      "native_model_same_letters_different_digits": "型号字母相同、数字不同"
     },
     "label_rejected": "评价输入按预期拒绝了目标标签。",
     "label_accepted": "评价输入错误地接受了目标标签。",
@@ -77,12 +87,20 @@
       "core_tests": "回放记录中的核心测试数",
       "fixed_artifact_replay_cli_commands": "现有权重回放的命令数",
       "independently_checked_result_groups": "独立核对的结果组数",
-      "max_prediction_difference": "最大预测差值",
+      "max_prediction_difference": "已记录的回放：最大预测差值",
       "new_training_in_replay": "回放期间是否重新训练",
-      "fresh_training_reproduced": "是否已验收完整重训"
+      "fresh_training_reproduced": "是否已验证完整重训"
     },
     "yes": "是",
     "no": "否",
-    "done": "执行完成：只使用公开聚合结果和合成例子，没有加载模型库、读取商品数据集、推断或训练。"
+    "done": "讲解完成：聚合结果复算与合成特征、指标示例。",
+    "f1_c0": "各自校准阈值下，相较 C0 的 F1 差值",
+    "error_counts": "已保存的误差计数",
+    "case": "合成输入",
+    "cases": {
+      "same_model": "型号相同",
+      "different_model": "型号数字不同",
+      "different_currency": "币种不同"
+    }
   }
 }

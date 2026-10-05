@@ -16,7 +16,7 @@ SHOWCASE={
     'showcase/zh-CN/index.html','showcase/zh-CN/method.html','showcase/zh-CN/results.html','showcase/zh-CN/reproduce.html',
 }
 METADATA={'FINAL_MODEL.json','EXPERIMENT_LOCK.json','ROBERTA_SNAPSHOT.json','FEATURES.json','PUBLIC_MANIFEST.json','ROLE_RECONSTRUCTION.json'}
-RUNTIME={'.git','.venv','.conda','__pycache__','.pytest_cache','build','dist'}
+RUNTIME={'.git','.venv','.venv-gpu','.conda','__pycache__','.pytest_cache','build','dist'}
 def allowed(name):
     if name=='.github/workflows/pages.yml':return True
     parts=Path(name).parts

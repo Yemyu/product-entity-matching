@@ -4,7 +4,7 @@
 
 ## Source, roles and scope
 
-The experiment uses a custom frozen set of Walmart–Amazon product pairs. Its role names are project assignments, rather than evidence that an official source test file remained untouched.
+The experiment uses a custom fixed set of Walmart–Amazon product pairs. Its role names are project assignments, rather than evidence that an official source test file remained untouched.
 
 | Role | Pairs | Use |
 | --- | ---: | --- |
@@ -72,7 +72,7 @@ The order below is fixed by [FEATURES.json](../reproducibility/FEATURES.json). A
 | 41 | `native_category_token_jaccard` | Jaccard overlap of category tokens |
 | 42 | `native_category_exact` | Both normalized categories are present and equal |
 
-The [feature code](../src/product_matching/features.py) and [title evidence code](../src/product_matching/lexical.py) define exact tokenization and arithmetic; the dictionary describes those operations without renaming the API.
+The [feature code](../src/product_matching/features.py) and [title evidence code](../src/product_matching/lexical.py) define exact tokenization and arithmetic; the dictionary explains the same operations using their API identifiers.
 
 ## Model input and labels
 
@@ -82,6 +82,6 @@ A pair record contains `pair_id`, `left`, `right`, `left_native` and `right_nati
 
 ## Access and reconstruction
 
-The checkout contains no original product rows, labels, membership lists, snapshots or trained weights. Acme examples in the Notebook and pages are synthetic illustrations, not observations or model predictions. Third-party data must be obtained and used under its own terms.
+The checkout contains no original product values, labels, original membership-ID files, model snapshots or trained weights. It does include the ordered source-record positions and missing-field masks needed to reconstruct the fixed roles. Acme examples in the Notebook and pages are synthetic illustrations, not observations or model predictions. Third-party data must be obtained and used under its own terms.
 
-The frozen role inputs can be reconstructed from a locally obtained original ZIP using `reconstruct-roles` and the bundled source-position recipe. All four business files matched the retained inputs byte for byte. The command preserves original missing-field masks and separates non-fit labels. It does not choose a new split or recover historical exposure. Substituting a random split would produce a different experiment. See [reproduction](REPRODUCIBILITY.md) and [limitations](LIMITATIONS.md).
+The fixed role inputs can be reconstructed from a locally obtained original ZIP using `reconstruct-roles` and the bundled source-position recipe. All four business files matched the retained inputs byte for byte. The command preserves original missing-field masks and separates non-fit labels. It does not choose a new split or recover historical exposure. Substituting a random split would produce a different experiment. Local inputs and outputs use `../product-matching-work/`. See [reproduction](REPRODUCIBILITY.md), [command examples](CORE_USAGE.md) and [limitations](LIMITATIONS.md).

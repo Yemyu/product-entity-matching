@@ -12,7 +12,7 @@ The backbone is `FacebookAI/roberta-base`, revision `e2da8e2f811d1448a5b465c236f
 
 Each record has fixed token budgets: brand 16, model 32, category 16 and title 62, including field markers. A long title retains its first 40 and last 22 tokens. Each AB or BA pair is at most 256 tokens including RoBERTa special tokens. Missing text fields are serialized explicitly.
 
-For each seed, `p_seed = sigmoid((logit_AB + logit_BA) / 2)`. The final score is the equal mean of probabilities from seeds 42, 43 and 44. Averaging directions happens before sigmoid; averaging seeds happens after it. Development selected the common epoch 4, rather than a seed or epoch selected on evaluation labels.
+For each seed, `p_seed = sigmoid((logit_AB + logit_BA) / 2)`. The final score is the equal mean of probabilities from seeds 42, 43 and 44. Averaging directions happens before sigmoid; averaging seeds happens after it. Development selected the common epoch 4; evaluation labels were excluded from seed and epoch selection.
 
 A and B denote the two listings; AB and BA are the two input orders. A token is a text unit processed by the encoder, such as a word or part of a word. A logit is the raw score before sigmoid maps it between 0 and 1. Training seeds control random initialization and data order; this model averages probabilities from three fixed seeds.
 
@@ -30,7 +30,7 @@ A and B denote the two listings; AB and BA are the two input orders. A token is 
 | Encoder training | BF16 autocast; FP32 parameters |
 | Head and inference | FP32 |
 
-[FINAL_MODEL.json](../reproducibility/FINAL_MODEL.json) records the settings and three selected checkpoint hashes. [ROBERTA_SNAPSHOT.json](../reproducibility/ROBERTA_SNAPSHOT.json) records the local backbone file hashes. The weights and snapshots themselves are not distributed.
+[FINAL_MODEL.json](../reproducibility/FINAL_MODEL.json) records the settings and three selected checkpoint hashes. [ROBERTA_SNAPSHOT.json](../reproducibility/ROBERTA_SNAPSHOT.json) records the local backbone file hashes. The weights and snapshots themselves are not distributed. The original trained weights have no public download entry. For the backbone source and local file layout, see the [reproduction guide](REPRODUCIBILITY.md).
 
 ## References and ablation
 
@@ -71,6 +71,6 @@ Precision is **0.937500** and recall **0.868421**. AP measures positive-pair ran
 
 ## Verification and use limits
 
-Existing-weight replay checked 23 result groups from 20 commands against frozen outputs, with zero differences. The [reproduction guide](REPRODUCIBILITY.md) separates this evidence from public synthetic checks and unvalidated fresh training. Snapshot/checkpoint hashes identify artifacts; they do not establish unseen-data evaluation.
+Existing-weight replay checked 23 result groups from 20 commands against retained outputs, with zero differences. The [reproduction guide](REPRODUCIBILITY.md) separates this evidence from public synthetic checks and unvalidated fresh training. Snapshot/checkpoint hashes identify artifacts; they do not establish unseen-data evaluation.
 
 This 555-pair comparison does not measure latency, production throughput or independent Walmart–Amazon generalization. A high score alone does not establish that a catalog merge is correct. See the [data card](DATA_CARD.md) and [limitations](LIMITATIONS.md). The [MIT code license](../LICENSE) does not replace third-party model or data terms.

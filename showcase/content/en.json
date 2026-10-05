@@ -12,7 +12,7 @@
   "language_label": "Read this page in Simplified Chinese",
   "language_text": "简体中文",
   "next": "Continue reading",
-  "notice": "Template sources and license notices",
+  "notice": "Template sources and license notices (GitHub)",
   "footer_scope": "RoBERTa product-pair scoring and a fixed-pool retrospective comparison.",
   "credit": "Adapted from the <a href=\"https://github.com/eliahuhorwitz/Academic-project-page-template\">Academic Project Page Template</a>, originally based on <a href=\"https://nerfies.github.io/\">Nerfies</a>. Layout, styles and navigation have been modified.",
   "license_scope": "Website adaptations: <a href=\"../LICENSE\">CC BY-SA 4.0</a>. Model code: <a href=\"../../LICENSE\">MIT</a>. Data and third-party models retain their own terms.",
@@ -22,7 +22,7 @@
       "eyebrow": "Product Entity Matching",
       "heading": "Product entity matching with RoBERTa and comparison features",
       "lead": "Compare retailer listings using their text and product fields. The model combines a joint text representation with explicit comparisons of titles, model numbers, brands and prices, and returns a score for each pair.",
-      "description": "Product-pair input, field preparation, RoBERTa feature fusion and results on a fixed retrospective evaluation pool.",
+      "description": "Product matching examples, RoBERTa and comparison features, fixed-pool results and code entry points.",
       "links": [
         "View results",
         "Data and method"
@@ -32,8 +32,8 @@
       "title": "Data & method",
       "eyebrow": "Data & method",
       "heading": "Data preparation and RoBERTa feature fusion",
-      "lead": "Normalization creates consistent views of product fields. A 42-dimensional comparison vector records agreement, differences and missing values; RoBERTa encodes both listing orders. Development and calibration data select the checkpoint and decision cutoff.",
-      "description": "Six stages covering inputs, normalization, roles, 42 comparisons, RoBERTa fusion, score aggregation and calibration.",
+      "lead": "Follow the product pairs from their project data roles through field normalization, explicit comparisons and joint RoBERTa encoding. The model scores both listing orders and combines three training seeds; development and calibration data choose the checkpoint and cutoff.",
+      "description": "Data source and roles, normalization, 42 comparison features, RoBERTa fusion, aggregation and calibration.",
       "links": [
         "Model card",
         "Final configuration"
@@ -43,10 +43,10 @@
       "title": "Results",
       "eyebrow": "Fixed-pool comparison",
       "heading": "Retrospective results on [[evaluation]] product pairs",
-      "lead": "Compare six methods on the same product pairs: four models based on numerical comparisons, the final text-and-feature model C+, and the independently trained C0 control whose comparison features are set to zero. AP measures ranking; F1 measures decisions at each method’s calibration cutoff.",
+      "lead": "Six methods are compared on the same [[evaluation]] product pairs. The final model C+ combines RoBERTa with comparison features; C0 is an independently trained control with those features set to zero. Compare ranking quality, calibrated decisions and errors below.",
       "description": "Six-method aggregate comparison, calibrated C+ confusion counts and limits of the fixed retrospective evaluation.",
       "links": [
-        "Download result table",
+        "Download results (CSV)",
         "Read the limitations"
       ]
     },
@@ -54,27 +54,22 @@
       "title": "Reproduction",
       "eyebrow": "Code and reproduction",
       "heading": "Environment, quickstart and model reproduction",
-      "lead": "Start with standard-library checks and a local website preview. For model reproduction, the guides describe source-input reconstruction, required local model files and prediction commands. Existing-weight replay has passed; fresh end-to-end training remains unvalidated.",
+      "lead": "Start with standard-library checks and a local website preview. The model guide covers original-input reconstruction, required local files and prediction commands. Existing-weight replay has passed; fresh end-to-end training remains unvalidated.",
       "description": "Environment setup, standard-library checks, model command inputs and outputs, and verified existing-weight replay.",
       "links": [
         "Quickstart",
-        "CLI guide"
+        "Command-line guide"
       ]
     }
   },
   "overview_example_title": "Field normalization and eight example comparisons",
-  "example_label": "Synthetic example; no model prediction",
   "listing_a": "Listing A",
   "listing_b": "Listing B",
-  "example_title_a": "Acme ZX-100 cordless drill",
-  "example_title_b": "ACME ZX100 cordless drill",
   "brand_label": "Brand",
   "model_label": "Model",
   "price_label": "Price",
   "category_label": "Category",
-  "example_category": "Power tools",
   "missing": "Missing",
-  "example_note": "The compact forms of ZX-100 and ZX100 agree, while ZX-101 has different digits. This illustrates two operations in the feature pipeline: compare formatting variants, and record model-code disagreements. The listings are synthetic; neither has been scored by RoBERTa, and their identity is not a measured result.",
   "overview_result_title": "C+ results on the fixed evaluation pool",
   "evaluation_context": "[[evaluation]] fixed Walmart–Amazon pairs",
   "ap_expansion": "Average precision",
@@ -83,20 +78,16 @@
   "ap_context": "Positive-pair ranking",
   "f1_context": "At the calibration cutoff",
   "p100_context": "First 100 ranked pairs",
-  "overview_result_note": "C+ averages the probabilities from three training seeds. On the [[evaluation]] fixed Walmart–Amazon pairs, it reached AP [[ap4]], F1 [[f14]] and P@100 [[p100]]. Against L42, the best tabular reference on this pool, AP was [[delta_ap]] percentage points higher and F1 was [[delta_f1]] percentage points higher. The AP difference from C0 was only [[delta_c0_ap]] percentage points, so the comparison does not establish a substantial ranking gain from the feature input.",
   "scope": "The evaluation is retrospective. The fixed pool’s historical exposure record is incomplete, and performance on an independent new Walmart–Amazon sample has not been tested.",
-  "overview_choice_title": "Six-stage data preparation and scoring procedure",
-  "fields_title": "Normalization and comparison features",
-  "fields_p": "The input has title, brand, description, price and currency fields, plus native model number and category fields. Text is normalized for comparison, and missing or ambiguous values retain explicit states. Prices are compared only when both values parse and their recognized currencies agree. Separate model-code comparisons record matching codes, edit distance and disagreements in letters or digits.",
-  "model_title": "Direction averaging and three-seed probability ensemble",
-  "model_p": "Within each seed, the same trained model scores AB and BA order. Compute p_seed = sigmoid((logit_AB + logit_BA) / 2), then take the equal mean of the probabilities from seeds [[seeds]], using the common checkpoint at epoch [[epoch]]. This produces one continuous C+ score; the calibration cutoff is applied afterwards. Averaging logits before sigmoid and averaging seed probabilities afterwards are distinct operations, and this order is preserved.",
+  "overview_choice_title": "How the model scores a product pair",
+  "model_title": "Direction averaging and the three-seed ensemble",
   "read_method": "Data and scoring procedure",
   "read_results": "Six-method result table",
-  "overview_close_title": "Public files and local artifact requirements",
-  "overview_close_p": "The repository includes model source, fixed settings, six-method aggregate results, bilingual guides and executable examples. Start with the environment and quickstart instructions to check the code and preview this website. Real model prediction additionally requires locally supplied product inputs, model snapshots and trained weights.",
-  "read_reproduce": "Public checks and model replay",
-  "roles_title": "Fit, development, calibration and evaluation roles",
-  "roles_intro": "The pairs have four preassigned project roles. Fit is used to estimate model parameters and title IDF; development selects an epoch; calibration selects a cutoff; evaluation supplies the reported comparison. These assignments do not establish an untouched official test split or an entity-disjoint evaluation.",
+  "overview_close_title": "Use the code and explore the project",
+  "overview_close_p": "The repository includes model source, fixed settings, six-method results and bilingual guides. The quickstart checks the public code and opens this static site locally. To run model prediction, supply the product inputs, model snapshots and trained weights described in the reproduction guide.",
+  "read_reproduce": "Environment and quickstart",
+  "roles_title": "Data source and project roles",
+  "roles_intro": "The four roles below are project assignments. Fit estimates model parameters and title IDF (inverse document frequency), which downweights words that occur in many training titles. Development selects one shared checkpoint epoch, calibration selects a decision cutoff, and evaluation supplies the reported comparison.",
   "role_names": [
     "Fit",
     "Development",
@@ -104,13 +95,13 @@
     "Evaluation"
   ],
   "role_p": [
-    "Fit title IDF, the tabular references and each neural training seed.",
-    "Use the three seeds’ development predictions to select one common epoch.",
-    "Use calibration scores and labels to select a cutoff by F1, then precision, then the higher cutoff.",
-    "Apply the saved cutoff and report ranking metrics and integer prediction counts."
+    "Fit title IDF, the numerical-feature references and the models for each training seed.",
+    "Use the three seeds’ predictions to select one common epoch.",
+    "Select a cutoff by calibration F1, then precision, then the higher cutoff.",
+    "Apply the saved cutoff and report ranking metrics and prediction counts."
   ],
-  "roles_note": "Only fit model inputs contain target labels. Development, calibration and evaluation labels are held in separate files and joined to scores by pair_id for their respective commands. Non-fit preparation reuses the saved fit IDF state. These input rules describe the current code; they cannot reconstruct the fixed pool’s incomplete historical exposure record.",
-  "processing_title": "Field normalization, quality states and title IDF",
+  "roles_note": "Only fit inputs include target labels. Other roles store labels separately and join them to scores by pair_id in selection or metric commands; preparation reuses the saved fit IDF state. These input rules do not establish an untouched official test split or an entity-disjoint evaluation. The fixed pool’s historical exposure record is incomplete.",
+  "processing_title": "Field normalization and title weighting",
   "processing_names": [
     "Missing fields",
     "Price and currency comparability",
@@ -124,7 +115,7 @@
     "Title word and character document frequencies are fitted on content-deduplicated business records from fit only. The saved IDF state weights title overlap in later roles without refitting. Direct title-number and compact-title comparisons are also included; they do not require fitting. For example, in 100 synthetic training records, a term appearing in 80 of those records has weight 1 + ln(101/81) ≈ 1.221; one appearing in two records has weight 1 + ln(101/3) ≈ 4.517. Common terms therefore contribute less evidence of overlap. These counts illustrate the calculation; they are not dataset statistics."
   ],
   "features_title": "The ordered [[features]]-feature vector",
-  "features_intro": "Preparation produces one x42 vector per pair. Its four groups have 14, 8, 8 and 12 values, in the exact order recorded in FEATURES.json. IDs and labels are excluded. Similarity values for missing inputs are zero, with separate presence or comparability indicators where defined. Expand a group to inspect its identifiers and descriptions.",
+  "features_intro": "Each pair receives a [[features]]-dimensional comparison vector, named x42 in the code. Its four groups contain 14, 8, 8 and 12 values in the FEATURES.json order. IDs and labels are excluded. Similarities for missing inputs are zero, with separate presence or comparability indicators where defined. Expand a group to inspect the identifiers and meanings.",
   "feature_group_names": [
     "Business-field comparisons",
     "Title IDF and direct title comparisons",
@@ -138,34 +129,11 @@
     "Eight values compare model-like codes extracted from titles. They cover missingness, exact overlap, set overlap, best edit similarity and differences in the letter and digit parts.",
     "Twelve values compare native model numbers and categories, including presence, equality, edit/trigram similarity and whether a native model appears in the other listing’s title codes."
   ],
-  "feature_source": "Download the ordered feature specification",
+  "feature_source": "Download the ordered feature specification (JSON)",
   "architecture_title": "RoBERTa text encoding and feature-fusion head",
-  "architecture_intro": "Each seed uses the same architecture with its own trained parameters. The text branch receives brand, native model number, category and title. The comparison branch supplies x42, including description and price evidence. The fusion head returns one logit for each listing order; aggregation produces the final pair score.",
-  "diagram_title": "C+ inputs, fusion head and score aggregation",
-  "diagram_description": "Two product listings enter AB and BA encodings. RoBERTa CLS is projected to 64 units and joined with [[features]] comparison features. A fusion head gives logits. Average AB and BA logits, apply sigmoid, then average seed probabilities.",
-  "diagram_nodes": [
-    "Two listings",
-    "AB / BA tokens",
-    "RoBERTa-base",
-    "Text projection",
-    "Fusion head",
-    "Direction mean",
-    "Three-seed mean"
-  ],
-  "diagram_details": [
-    "Normalized fields",
-    "Max 256 tokens",
-    "CLS: 768 units",
-    "64 units · GELU",
-    "64 units · GELU",
-    "Mean logits → sigmoid",
-    "Equal-weight probability mean"
-  ],
-  "feature_node": "[[features]] comparisons",
-  "feature_node_detail": "Field comparisons; fit-only IDF",
-  "architecture_note": "For each AB or BA input, the 768-dimensional RoBERTa first-token representation passes through a 64-unit GELU projection. Concatenating [[features]] comparisons gives 106 inputs to a second 64-unit GELU layer; dropout [[dropout]] and a linear layer produce one logit. Average AB and BA logits, apply sigmoid, then take the equal probability mean over seeds [[seeds]]. Each pair is limited to 256 tokens. Field budgets are brand 16, model 32, category 16 and title 62; a long title retains the first 40 and last 22 tokens.",
-  "configuration_title": "Fixed training settings and selected checkpoint",
-  "configuration_intro": "C+ trains with a six-epoch schedule. Development compares ensemble predictions and selected common epoch [[epoch]] for seeds [[seeds]]. Calibration selected cutoff [[threshold]], which evaluation reuses. The table records the frozen settings; it is not a new tuning or training run.",
+  "architecture_intro": "The model combines a joint text representation with the x42 comparison vector. AB means listing A followed by B; BA reverses that order. Each training seed has its own fitted parameters and scores both orders with the same architecture.",
+  "configuration_title": "Checkpoint selection and calibration",
+  "configuration_intro": "Training follows a six-epoch schedule. Development compares ensemble predictions and selects common epoch [[epoch]] for seeds [[seeds]]. Calibration selects cutoff [[threshold]], which is then reused for evaluation.",
   "config_labels": [
     "Backbone revision",
     "Training seeds",
@@ -178,16 +146,14 @@
     "Training precision",
     "Inference precision"
   ],
-  "precision_training": "BF16 encoder; FP32 parameters and head",
-  "precision_inference": "FP32",
-  "method_scope": "This page describes the fixed implementation. New-source generalization and a fresh end-to-end training reproduction remain unverified.",
+  "precision_training": "BF16 (16-bit brain floating point) encoder computations; FP32 (32-bit floating point) parameters and head",
+  "precision_inference": "FP32 (32-bit floating point)",
   "comparison_title": "AP ranking and F1 at calibrated cutoffs",
-  "comparison_intro": "All six methods scored the same [[evaluation]]-pair retrospective pool, including [[positive]] matches. Each method uses its own calibration cutoff for F1. AP compares ranking without that cutoff. Both plot axes cover 0–1, and the table keeps six decimal places.",
+  "comparison_intro": "All six methods score the same [[evaluation]]-pair retrospective pool, including [[positive]] matches. Average precision (AP) measures ranking from continuous scores; F1 combines precision and recall at each method’s own calibration cutoff. Both plot axes cover 0–1.",
   "metric_control": "Choose comparison metric",
   "chart_range": "Full axis: 0–1",
   "chart_ap_title": "Average precision (AP)",
   "chart_f1_title": "F1 at each method’s calibration cutoff",
-  "chart_caption": "C+ is the final three-seed ensemble. C0 is trained independently, with all 42 comparison values zeroed in both training and inference. B22, L30, S33 and L42 are the four tabular references.",
   "nojs": "Both complete plots remain visible when JavaScript is disabled.",
   "methods": {
     "B22": "Logistic regression on 22 comparisons",
@@ -201,7 +167,7 @@
   "method_column": "Method",
   "precision_label": "Precision",
   "recall_label": "Recall",
-  "table_caption": "AP and F1 are distinct measures. The CSV contains the original unrounded metric values, integer counts and each calibration cutoff.",
+  "table_caption": "Metrics are shown to six decimal places, except P@100, which uses two. The downloadable CSV preserves the original unrounded values, integer counts and each calibration cutoff.",
   "matrix_title": "C+ confusion matrix at the calibration cutoff",
   "actual_label": "Actual class",
   "predicted_negative": "Predicted different",
@@ -210,23 +176,21 @@
   "actual_positive": "Same product",
   "matrix_caption": "Rows are actual classes; columns are predictions. [[evaluation]] pairs in total, with [[positive]] actual matches.",
   "matrix_note_title": "False matches and missed matches",
-  "matrix_note": "At the calibration cutoff [[threshold]], C+ classified [[fp]] nonmatches as matches and missed [[fn]] actual matches. These counts give precision [[precision4]] and recall [[recall4]]. They describe this pair pool. A score alone is insufficient evidence for an automatic catalog merge.",
+  "matrix_note": "At cutoff [[threshold]], C+ predicts [[fp]] nonmatches as matches and misses [[fn]] actual matches. These counts give precision [[precision4]] and recall [[recall4]]. They describe matching predictions on this pool, not actual catalog merges.",
   "delta_title": "C+ differences from L42 and C0",
-  "delta_p": "Relative to L42 on this pool, C+ AP was [[delta_ap]] percentage points higher and F1 was [[delta_f1]] percentage points higher. Relative to C0, AP was only [[delta_c0_ap]] percentage points higher. C0 is an independently trained control: all 42 feature values are zero during training and inference. It uses the six-epoch scheduler for four training epochs and is compared at epoch 4. The aggregate results do not establish a substantial feature-driven AP gain or statistical significance.",
   "definitions_title": "Metric definitions and cutoff dependence",
   "definition_p": [
     "Average precision (AP) summarizes precision over the ranking of positive pairs. It uses the continuous pair scores and groups tied scores. AP [[ap4]] is not a classification accuracy of [[ap4]].",
     "F1 combines precision and recall after turning scores into match/nonmatch predictions at a cutoff. The cutoff is selected on calibration labels and fixed before evaluation. Changing it changes the balance of false matches and missed matches.",
     "P@100 is the fraction of actual matches among the first 100 ranked pairs. Score ties at the boundary are ordered by pair_id. P@100 [[p100]] describes those 100 pairs in this pool, rather than all products or future listings."
   ],
-  "limits_title": "Evaluation scope and unvalidated claims",
-  "limits_p": "The [[evaluation]]-pair pool is retrospective, and its history of use is not fully documented. No independent new Walmart–Amazon sample or entity-disjoint evaluation is established here. The saved aggregates provide no confidence interval or production latency/business-benefit measurement. Agreement in existing-weight replay verifies artifact preparation and prediction through the public code entry; it does not provide new unseen-data evidence.",
+  "limits_title": "Evaluation scope and limitations",
   "public_title": "Check the public code and saved outputs",
   "public_intro": "After setting up the environment above, run these checks from the repository root. They exercise input interfaces, feature calculations and metric arithmetic using synthetic records, and check the stored aggregate results. They require no model download or GPU.",
   "check_step_title": "Interfaces, saved outputs and file checks",
   "check_step_p": "public_smoke.py checks the package and CLI entry points. run_notebook.py runs the English and Chinese executable walkthroughs and compares their saved outputs. verify_public_release.py checks the public file inventory, hashes, local links and result arithmetic. A passed report confirms these code and document checks; it does not run model inference.",
-  "tests_step_title": "CLI help and synthetic contract tests",
-  "tests_step_p": "The help command shows the explicit preparation, training and prediction entry points. The test suite checks synthetic cases. Passing these tests is separate from reproducing the model experiment.",
+  "tests_step_title": "Command-line help and synthetic input tests",
+  "tests_step_p": "The command-line interface (CLI) exposes preparation, training and prediction commands. The test suite checks synthetic cases; passing it does not reproduce the trained model’s experimental results.",
   "copy": "Copy commands",
   "copy_ready": "",
   "replay_title": "Verified existing-weight preparation and prediction",
@@ -238,8 +202,8 @@
   ],
   "replay_note": "Observed environment: Windows 11, Python 3.11.16, PyTorch 2.8.0+cu126 and an RTX 3060 laptop. Other GPU platforms have not been validated. The aggregate record is available as fixed-results.json.",
   "fresh_title": "Original inputs and fresh training",
-  "fresh_p": "The reconstruct-roles command verifies the original ZIP and restores all four role inputs byte for byte, including the original native missing masks. The recipe contains source positions and hashes, with no product values or labels. GPU replay still requires local snapshots and trusted weights. Fresh end-to-end training and independent new Walmart–Amazon sample evaluation have not been validated.",
-  "fresh_note": "Use locally supplied artifacts under their applicable terms and a project environment. Fit estimates model parameters and IDF; development selects the epoch; calibration selects the cutoff. Evaluation labels remain separate from model input and are not used to choose these settings. The interface checks do not resolve the historical exposure of the saved evaluation pool.",
+  "fresh_p": "The reconstruct-roles command verifies the original ZIP and restores the four fixed role inputs byte for byte, including native-field missing masks. The recipe contains source positions and hashes without product values or labels. Existing-weight replay requires local snapshots and trusted weights; fresh end-to-end training and independent new Walmart–Amazon sample evaluation remain unvalidated.",
+  "fresh_note": "The reproduction guide specifies the required files, project environment and command sequence. Keep evaluation labels separate from model input, and use the documented role assignments to reproduce the saved experiment.",
   "resources_title": "Source, configuration and technical documentation",
   "resource_names": [
     "Project brief",
@@ -249,9 +213,9 @@
     "Reproducibility",
     "Limitations",
     "Code map",
-    "Machine-readable results",
-    "Final model configuration",
-    "Ordered features"
+    "Download aggregate results (JSON)",
+    "Download final model configuration (JSON)",
+    "Download ordered features (JSON)"
   ],
   "source_project": "Public model source directory",
   "rebuild_title": "Local static-page generation",
@@ -301,54 +265,9 @@
     "Category word overlap",
     "Category equality"
   ],
-  "data_example_intro": "The workbench uses synthetic Acme cordless-drill records and displays normalized fields plus eight selected comparisons from the 42-feature vector. The first scenario changes ZX-100 to ZX100 and brand capitalization while keeping the listing type the same. The second uses ZX101 to expose a model-digit disagreement. The third removes a brand and changes the currency, so presence and price-comparability indicators change.",
-  "model_decision_explanation": "The final method uses RoBERTa for the paired text and a separate comparison vector for explicit field operations. A title can share many words with another listing while differing in a model digit; a price can be absent or in a different currency. The 42-dimensional comparison vector, named x42 in the code, records those conditions directly. Brand, model, category and title are serialized for RoBERTa, while description and price enter through the feature vector. The 768-dimensional text representation is projected before joining x42. This is the architecture tested in the fixed comparison, not evidence that feature fusion is generally superior: The independently trained C0 control, with all comparison features set to zero, has nearly the same AP on this pool.",
-  "reference_comparison_explanation": "B22 fits logistic regression on the first 22 comparisons. L30 uses gradient-boosted trees on 30 comparisons; S33 adds three fixed MiniLM semantic/missingness values to that representation. L42 uses all 42 comparisons without RoBERTa, so it supplies the strongest tabular reference measured on this pool. C+ adds paired-text encoding and averages three trained seeds. C0 is trained independently of C+, retains the neural dimensions, and zeros all 42 feature values throughout training and inference. It is evaluated at epoch 4 after four training epochs with the six-epoch scheduler. All six rows use the same evaluation pool; F1 is computed at each method’s calibration cutoff. The comparison is retrospective and does not establish statistical significance.",
-  "result_interpretation": "Compared with L42, C+ reduces false matches from 35 to 11 while missed matches increase from 23 to 25, improving F1. Its AP is only 0.0381 percentage points above separately trained C0. This comparison does not establish a clear ranking benefit from the 42 features; independent new Walmart–Amazon sample generalization remains untested.",
-  "walkthrough_stages": [
-    {
-      "title": "Field normalization and quality states",
-      "input": "Two supplied retailer records with title, brand, description, price and priceCurrency; native modelno and category fields.",
-      "operation": "Create normalized business and native views. Apply Unicode normalization, case folding and whitespace cleanup to text. Parse plain nonnegative prices, retain missing/ambiguous states, and enable price comparison only for equal recognized currencies.",
-      "output": "A pair record with pair_id, left, right, left_native and right_native, including explicit price/currency quality states. The original source is not replaced by a guessed value.",
-      "rationale": "Title formatting varies, while a model digit or currency difference can change what is being compared. Separating normalized values from unavailable evidence prevents missing prices or two absent brands from becoming positive equality evidence."
-    },
-    {
-      "title": "Preassigned data roles and label separation",
-      "input": "Frozen pair membership and the corresponding fit, dev, calibration and evaluation records; separate non-fit label lists.",
-      "operation": "Fit model parameters and title IDF on fit. Select one common ensemble epoch on dev. Select a cutoff on calibration. Apply the selected settings to evaluation. Join non-fit labels by pair_id only in the relevant metric or selection command.",
-      "output": "Prepared role-specific inputs and separate selection/calibration/evaluation labels. The reported evaluation pool has [[evaluation]] pairs, including [[positive]] matches.",
-      "rationale": "Epoch selection and cutoff selection answer different procedural questions. Keeping them separate prevents the current prediction interface from consuming evaluation labels. It does not establish that the retrospective pool was untouched earlier; its historical exposure record remains incomplete."
-    },
-    {
-      "title": "The [[features]]-dimensional comparison vector",
-      "input": "Normalized business/native pair views and title IDF fitted on deduplicated fit records.",
-      "operation": "Compute 14 business comparisons, 8 title-IDF/direct-title comparisons, 8 title-code comparisons and 12 native-model/category comparisons. Preserve the FEATURES.json order and reuse the fit IDF state for later roles.",
-      "output": "One finite x42 vector in [0, 1] per pair, with similarity, presence, disagreement and comparability values. IDs and target labels are not vector entries.",
-      "rationale": "The vector gives the model explicit observations such as a shared model code, a changed digit, a missing brand or an incomparable price. The fixed order makes the same meaning available to the tabular references and the neural fusion head."
-    },
-    {
-      "title": "RoBERTa encoding and feature fusion",
-      "input": "Brand, native model number, category and title serialized in AB and BA order, plus the pair’s x42 vector.",
-      "operation": "Encode each order with RoBERTa-base within the 256-token limit. Project the 768-dimensional first-token representation to 64 GELU units, concatenate [[features]] comparisons, then apply a 64-unit GELU layer, dropout [[dropout]] and a linear output.",
-      "output": "One scalar logit for AB and one for BA in each seed. Description and price evidence reach the head through x42, rather than the text serialization.",
-      "rationale": "The text branch represents the pair’s language, while explicit field comparisons retain model-code and missingness information. This is the tested fusion structure. The near-equal C0 AP limits the feature-contribution conclusion supported by this pool."
-    },
-    {
-      "title": "Direction averaging and three-seed ensemble",
-      "input": "AB and BA logits from seeds [[seeds]], all using the common checkpoint selected at epoch [[epoch]].",
-      "operation": "Within each seed, average the two direction logits and apply sigmoid. Then average the three resulting probabilities with equal weights. Direction averaging precedes sigmoid; seed averaging follows it.",
-      "output": "One continuous C+ score for each pair_id. This score is later ranked or compared with the calibration cutoff.",
-      "rationale": "Processing both listing orders makes the score symmetric to swapping the inputs. Averaging three fixed seeds defines the reported ensemble without selecting the most favorable seed on evaluation labels."
-    },
-    {
-      "title": "Calibration cutoff and fixed-pool evaluation",
-      "input": "Calibration scores and labels, followed by evaluation scores and separately supplied evaluation labels.",
-      "operation": "Choose maximum calibration F1, then precision, then the higher cutoff. Freeze cutoff [[threshold]] for C+. Align evaluation scores and labels by pair_id, compute AP with score ties grouped, P@100 with pair_id tie ordering, and the integer confusion matrix.",
-      "output": "C+ AP [[ap4]], F1 [[f14]] and P@100 [[p100]] on [[evaluation]] pairs; TP [[tp]], FP [[fp]], FN [[fn]] and TN [[tn]].",
-      "rationale": "AP measures ranking, while F1 evaluates decisions at the selected cutoff and P@100 describes only the first 100 pairs. These results belong to the fixed retrospective pool. They do not establish independent new Walmart–Amazon sample performance, and replay agreement is not fresh training or a new evaluation."
-    }
-  ],
+  "data_example_intro": "The three synthetic Acme drill scenarios show normalized fields and eight of the 42 comparisons. The first changes model spelling and brand capitalization, the second changes a model digit, and the third removes a brand and changes currency. Here a token means a text fragment produced by the feature tokenizer.",
+  "model_decision_explanation": "RoBERTa reads the two listings together to represent their text. A separate 42-value vector records explicit comparisons, such as model-digit differences, missing brands and whether prices share a currency. Brand, model number, category and title enter the text branch; description and price contribute through the comparison features. The two branches are combined to produce a pair score.",
+  "result_interpretation": "Compared with L42, the strongest numerical-feature reference on this pool, C+ reduces false matches from [[reference_fp]] to [[fp]] while missed matches increase from [[reference_fn]] to [[fn]], improving F1. AP is only [[delta_c0_ap]] percentage points above independently trained C0, so this comparison does not establish a substantial ranking gain from the 42 features.",
   "brief_title": "Task and product inputs",
   "command_flow_title": "Command inputs and outputs",
   "model_definition": "C+ names the final model in this project: RoBERTa with 42 comparison features, averaged across three training seeds.",
@@ -356,7 +275,176 @@
   "quickstart_intro": "Install Git and Python 3.11 or newer, then clone the repository. These checks and the local website use only the Python standard library. The project environment below keeps any later dependencies separate from your other projects.",
   "quickstart_preview": "The smoke check prints a JSON report with status passed. Keep the server running and open the local project site below; Ctrl+C stops the server.",
   "quickstart_open": "Open the local project site",
-  "quickstart_python": "The remaining commands use python from the activated macOS/Linux environment. On Windows, replace python with .\\.venv\\Scripts\\python.exe. If you downloaded a ZIP instead of cloning, open its extracted repository folder and start with the environment commands.",
-  "quickstart_gpu": "To prepare real model inputs or run prediction, supply the product data, model snapshot and checkpoints locally. Install the pinned neural dependencies in a separate project environment; the documented CUDA setup was checked on Windows 11 with an RTX 3060.",
-  "quickstart_gpu_link": "GPU dependencies and required local files"
+  "quickstart_python": "Commands below explicitly use the project interpreter: .venv/bin/python on macOS/Linux and .\\.venv\\Scripts\\python.exe on Windows. Choose the block for your system. If you downloaded a ZIP, enter its extracted repository folder and start with the environment commands.",
+  "quickstart_gpu": "Real input preparation and model prediction require locally supplied product data, model snapshots and checkpoints. Follow the linked guide for the GPU environment and working directories; the documented CUDA setup was checked on Windows 11 with an RTX 3060.",
+  "quickstart_gpu_link": "GPU environment and required local files",
+  "data_context": "The experiment uses a custom fixed set of product pairs from Walmart and Amazon. A pair contains two retailer records, and its label indicates whether they refer to the same product. The reported evaluation pool contains [[evaluation]] pairs: [[positive]] matches and [[negative]] nonmatches.",
+  "data_card_link": "Data fields, role reconstruction and access requirements",
+  "processing_intro": "Preparation keeps normalized business fields and native model/category fields in separate views. It produces comparable values without replacing missing or ambiguous source values. The rules below are shared by the numerical-feature models and the neural model. A token is a text fragment produced by a tokenizer; the feature calculations below use their own tokenization rules.",
+  "normalization_example_note": "These teaching values are computed by the public normalization functions when the site is built. Ordinary text retains hyphens; separate compact model/title views remove separators. Currency symbols and commas remain ambiguous, and missing prices remain missing.",
+  "text_branch": "Text branch",
+  "comparison_branch": "Comparison-feature branch",
+  "architecture_output": "One raw score (logit) per direction enters the aggregation below.",
+  "architecture_budget_title": "Text length and field token budgets",
+  "architecture_budget_p": "A token is a text unit produced by the model’s tokenizer. Each record has budgets of 16 tokens for brand, 32 for native model number, 16 for category and 62 for title. A long title retains its first 40 and last 22 tokens. The two records use at most 252 tokens; four special tokens bring the pair limit to 256.",
+  "aggregation_p": "A logit is the classifier’s raw score before conversion to a probability. Within each seed, average the AB and BA logits, then apply sigmoid to map the result into 0–1. Take the equal mean of those probabilities across seeds [[seeds]]. This gives a score symmetric to exchanging the two listings, while preserving the distinction between averaging logits and averaging probabilities.",
+  "aggregation_note": "All three seeds use the common epoch [[epoch]] selected on development data. The final score is classified as a match when it is at or above the calibration cutoff [[threshold]].",
+  "calibration_p": "Calibration maximizes F1, breaking ties by precision and then the higher cutoff. Evaluation labels are kept separate from model inputs and are not used to choose these settings. The table below records the settings of the reported experiment.",
+  "training_settings_title": "Training settings and numerical precision",
+  "read_scope": "Read the evaluation scope and limitations",
+  "view_architecture": "Architecture diagram",
+  "view_features": "The 42 features",
+  "reference_title": "The six methods being compared",
+  "reference_control_note": "C0 is trained independently of C+, with all 42 comparison values zero throughout training and inference. It retains the neural dimensions and uses the six-epoch scheduler for four training epochs; the comparison uses epoch 4.",
+  "chart_ap_caption": "C+ and the independently trained C0 have nearly equal AP; their difference is only [[delta_c0_ap]] percentage points.",
+  "chart_f1_caption": "Each F1 value uses that method’s calibration cutoff; the bars show no confidence intervals.",
+  "gains_intro": "The chart shows absolute metric differences on the same pool, using a shared 0–6 percentage-point scale (pp).",
+  "gains_caption": "No confidence intervals are available, so the bar lengths do not establish statistical significance or a substantial feature-driven ranking gain.",
+  "limitations_doc_link": "Detailed limitations and evidence boundaries",
+  "outcome_positive": "Actual matches",
+  "outcome_negative": "Actual nonmatches",
+  "missed_matches": "Missed matches",
+  "false_matches": "False matches",
+  "correct": "Correct",
+  "outcomes_title": "Correct and incorrect outcomes within each actual class",
+  "outcomes_intro": "Each bar is normalized to 100%; the denominators differ: [[positive]] matches and [[negative]] nonmatches.",
+  "outcomes_tradeoff": "Compared with L42, false matches fall from [[reference_fp]] to [[fp]] and missed matches rise from [[reference_fn]] to [[fn]]. Higher F1 comes with a small recall decrease. Aggregate counts do not identify which particular pairs were corrected.",
+  "example_boundary": "These synthetic listings illustrate field and feature calculations. The public functions compute comparison values when the pages are built, and the buttons switch between the generated scenario tables. This example runs no RoBERTa inference.",
+  "command_flow_intro": "These command-line interface (CLI) stages connect pair preparation, model training, prediction and evaluation. Model runs require local product inputs, pinned dependencies and model files. The guide gives file formats and full arguments for each stage.",
+  "checkpoint_title": "Checkpoint identities (SHA-256)",
+  "checkpoint_note": "Hashes identify the local weights corresponding to these checkpoints. The public repository does not redistribute model weights.",
+  "overview_brief": [
+    {
+      "title": "The matching task",
+      "text": "The same product can have different titles, model-number spellings or missing fields at different retailers. Finding the corresponding records helps align catalogs and inspect duplicates."
+    },
+    {
+      "title": "Input and output",
+      "text": "Input is a pair of product records with title, brand, description, price, currency, native model number and category. The model returns a score from 0 to 1; a calibrated cutoff turns it into a match or nonmatch prediction."
+    }
+  ],
+  "workflow_titles": [
+    "Normalize fields",
+    "Assign data roles",
+    "Compute 42 comparisons",
+    "Encode and fuse text",
+    "Average directions and seeds",
+    "Calibrate and evaluate"
+  ],
+  "example_cases": {
+    "spelling": {
+      "title": "Model spelling",
+      "note": "Title token overlap is 0.5 because ZX-100 and ZX100 form different tokens. Compact-model equality and title-code overlap are both 1, preserving their agreement despite spelling."
+    },
+    "digits": {
+      "title": "Different model digits",
+      "note": "Title token overlap remains 0.5, but compact-model equality is 0 and the digit-conflict feature is 1. These values are evidence supplied to the model; the example does not predict a match or rejection."
+    },
+    "missing": {
+      "title": "Missing brand / different currency",
+      "note": "A missing brand does not count as an equal brand. Both prices parse, but USD and EUR differ, so price comparability and similarity are 0. The comparability indicator distinguishes this unavailable comparison from a measured similarity."
+    }
+  },
+  "example_feature_labels": {
+    "title_token_jaccard": "Title token overlap",
+    "brand_equal": "Equal, present brands",
+    "brand_missing_any": "Any brand missing",
+    "price_comparable": "Comparable prices",
+    "price_similarity": "Same-currency price similarity",
+    "code_exact_overlap": "Title model-code overlap",
+    "code_same_letters_different_digits": "Same model letters, different digits",
+    "native_model_compact_exact": "Equal, present compact model numbers"
+  },
+  "architecture_nodes": [
+    {
+      "title": "Field serialization",
+      "code": "AB / BA",
+      "text": "Serialize brand, native model number, category and title from both listings in each order. Description and price are handled by the comparison branch."
+    },
+    {
+      "title": "Joint pair encoding",
+      "code": "RoBERTa-base · CLS 768 → 64",
+      "text": "RoBERTa jointly reads the complete pair. CLS denotes its first-token representation, used to summarize the pair. A linear projection and GELU (Gaussian Error Linear Unit), a nonlinear activation, transform this 768-dimensional state into 64 values."
+    },
+    {
+      "title": "Explicit comparisons",
+      "code": "14 + 8 + 8 + 12 = [[features]]",
+      "text": "Compare business fields, title evidence, title codes and native model/category fields. Presence and price comparability have separate indicators. Title IDF uses fit records only."
+    },
+    {
+      "title": "Shared comparison vector",
+      "code": "x42 ∈ [0, 1]⁴²",
+      "text": "The same vector is supplied for AB and BA. It includes description, price and currency evidence that is absent from the text serialization."
+    },
+    {
+      "title": "Concatenation and classifier",
+      "code": "64 + [[features]] = 106 → 64 → 1",
+      "text": "Concatenate the text projection and comparisons, then apply a 64-unit GELU layer, dropout [[dropout]] and a linear output. Training updates both the encoder and classifier."
+    }
+  ],
+  "model_resource_blocks": [
+    {
+      "title": "Input",
+      "text": "Two retailer records. Title, brand, native model number and category form the text input; description, price, currency and missing-field states contribute through comparison features."
+    },
+    {
+      "title": "Architecture",
+      "text": "RoBERTa jointly encodes the pair, projects its 768-dimensional representation to 64 values and joins [[features]] comparisons. The 106 → 64 → 1 classifier returns a raw score, called a logit."
+    },
+    {
+      "title": "Scoring and decision",
+      "text": "AB and BA are the two listing orders. Within each seed, average their logits and apply sigmoid. Average the resulting probabilities across seeds [[seeds]]. A final score at or above [[threshold]] is classified as a match."
+    }
+  ],
+  "reference_methods": {
+    "B22": "Logistic regression on the first 22 comparison features.",
+    "L30": "Gradient-boosted trees on 30 comparison features.",
+    "S33": "L30 plus three fixed MiniLM text-similarity and missingness features.",
+    "L42": "Gradient-boosted trees on all 42 comparisons; the strongest numerical-feature reference on this pool.",
+    "C+": "RoBERTa pair encoding with 42 comparisons, averaged across three training seeds.",
+    "C0": "A RoBERTa control with the comparison-feature input set to zero."
+  },
+  "limits_paragraphs": [
+    "The [[evaluation]]-pair evaluation pool is retrospective and its historical use is not fully documented. The current label-separation interface does not resolve that history. An independent new Walmart–Amazon sample or an entity-disjoint evaluation has not been established.",
+    "C+ improves AP and F1 over L42 on this pool, but its AP is only [[delta_c0_ap]] percentage points above independently trained C0. The aggregate results do not establish a substantial feature-driven ranking gain or statistical significance; no confidence intervals are available.",
+    "Existing-weight replay verifies artifact preparation and prediction through the public code entry. It does not reproduce fresh end-to-end training or supply new unseen-data evidence. Production latency and business benefits have not been measured, and pair scores alone do not justify automatic catalog merging."
+  ],
+  "command_columns": [
+    "Command stage",
+    "Input",
+    "Operation",
+    "Output"
+  ],
+  "command_stages": [
+    {
+      "name": "project-role",
+      "input": "Kept IDs, business views and native fields",
+      "operation": "Project the fixed role; reject extra fields",
+      "output": "Role-specific pair JSON"
+    },
+    {
+      "name": "prepare",
+      "input": "Pair JSON; reuse fit IDF outside fit",
+      "operation": "Construct x42 and AB/BA tokens; keep labels out of non-fit inputs",
+      "output": "Features, tokens and preparation receipt"
+    },
+    {
+      "name": "train",
+      "input": "Fit input, trusted snapshot and seed",
+      "operation": "Update encoder and classifier; save epoch checkpoints",
+      "output": "Checkpoints and training records"
+    },
+    {
+      "name": "predict / select-epoch",
+      "input": "Checkpoints, development input and separate labels",
+      "operation": "Predict first, then join labels by pair_id and select the shared epoch",
+      "output": "Prediction scores and selected epoch [[epoch]]"
+    },
+    {
+      "name": "calibrate / evaluate",
+      "input": "Calibration scores/labels; evaluation scores/labels",
+      "operation": "Select the calibration cutoff, then reuse it for evaluation",
+      "output": "Cutoff artifact and aggregate metrics"
+    }
+  ]
 }

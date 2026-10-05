@@ -42,6 +42,6 @@ Prediction starts a fresh process for each seed. `_predict-one` is the internal 
 | `notebooks/` | English and Chinese executable explanations |
 | `showcase/` | Static project pages in both languages |
 
-The package does not depend on a private project checkout or a remote training controller. Product rows, labels and trained artifacts are supplied explicitly for commands that need them. Public synthetic checks are separate from those model commands.
+Commands that need product rows, labels or trained artifacts read explicitly supplied local files. The [command guide](CORE_USAGE.md) keeps these inputs and run outputs in `../product-matching-work/`, beside the checkout.
 
 Continue with [CORE_USAGE](CORE_USAGE.md) for file interfaces, [MODEL_CARD](MODEL_CARD.md) for the architecture and [REPRODUCIBILITY](REPRODUCIBILITY.md) for verification scope.

@@ -20,7 +20,7 @@ The pair pool is retrospective and its history of use is not fully documented. I
 
 The [Notebook](../notebooks/product-matching-walkthrough.ipynb) uses saved aggregate results and synthetic product records. It runs without downloading models. The public checks cover input rules, feature construction and metric arithmetic.
 
-Existing-weight replay ran 20 commands and independently checked 23 result groups against frozen outputs, with zero differences. The replay covered token/feature preparation, MiniLM features, reference predictions and the final three-seed prediction. It did not retrain the model. A separate source reconstruction reproduced all four frozen business inputs byte for byte. Fresh training has not been reproduced.
+Existing-weight replay ran 20 commands and independently checked 23 result groups against retained outputs, with zero differences. The replay covered token/feature preparation, MiniLM features, reference predictions and the final three-seed prediction. It did not retrain the model. A separate source reconstruction reproduced all four fixed business inputs byte for byte. Fresh end-to-end training has not been validated. The original trained weights have no public download entry; exact replay requires already holding them. The [command guide](CORE_USAGE.md) uses a separate local work directory for inputs and outputs.
 
 ## Technical documentation
 

@@ -18,7 +18,7 @@ Three training seeds define the final ensemble. They are not three independent t
 
 Public checks and the Notebook use synthetic fixtures and saved aggregate results. They verify interface behavior and arithmetic, not a new run on product data.
 
-Existing-weight replay ran 20 commands and checked 23 result groups, with zero differences from frozen outputs. This verifies that the public code entry can prepare inputs and replay original artifacts. It does not reproduce fresh training. A separate raw-source reconstruction now matches all four frozen business files byte for byte; this restores the original membership rather than establishing an independent test. Exact model replay still requires local snapshots and trusted weights.
+Existing-weight replay ran 20 commands and checked 23 result groups, with zero differences from retained outputs. This verifies that the public code entry can prepare inputs and replay original artifacts. It does not reproduce fresh training. A separate raw-source reconstruction now matches all four fixed business files byte for byte; this restores the original membership rather than establishing an independent test. Exact model replay still requires local snapshots and trusted original weights, which have no public download entry. Fresh end-to-end retraining has not been validated.
 
 ## Environment and intended use
 

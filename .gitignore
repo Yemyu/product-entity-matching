@@ -4,7 +4,13 @@ models/
 reports/
 archives/
 .venv/
+.venv-gpu/
 .conda/
+inputs/
+prepared/
+predictions/
+runs/
+private/
 __pycache__/
 *.py[cod]
 .DS_Store

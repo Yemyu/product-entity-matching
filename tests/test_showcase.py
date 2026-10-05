@@ -79,6 +79,41 @@ class ShowcaseTests(unittest.TestCase):
         self.assertEqual(before, {p: (hashlib.sha256(p.read_bytes()).hexdigest(), p.stat().st_mtime_ns)
                                   for p in paths if p.is_file()})
 
+    def test_documents_open_on_github_and_machine_readable_files_are_downloads(self):
+        github = 'https://github.com/Yemyu/product-entity-matching/blob/main/'
+        for language in ('en', 'zh-CN'):
+            for name in ('index', 'method', 'results', 'reproduce'):
+                page = self.page(language, name)
+                for link in (item for item in page.select('href') if item['tag'] == 'a'):
+                    href = link['attrs']['href']
+                    if href.endswith('.md'):
+                        self.assertTrue(href.startswith(github), href)
+                        self.assertIn('GitHub', link['text'])
+                        if '/docs/' in href:
+                            directory = 'docs/zh-CN/' if language == 'zh-CN' else 'docs/'
+                            self.assertTrue(href.startswith(github + directory), href)
+                            if language == 'en':
+                                self.assertNotIn('/docs/zh-CN/', href)
+                    if href.endswith(('.json', '.csv')):
+                        self.assertIn('download', link['attrs'], href)
+                        self.assertTrue('JSON' in link['text'] or 'CSV' in link['text'], link['text'])
+            results = self.page(language, 'results')
+            buttons = [item for item in results.select('href', '#limitations')
+                       if 'button' in item['attrs'].get('class', '').split()]
+            self.assertEqual(len(buttons), 1)
+
+    def test_public_commands_use_the_explicit_project_interpreter(self):
+        for language in ('en', 'zh-CN'):
+            page = self.page(language, 'reproduce')
+            for item in (item for item in page.items if item['tag'] == 'pre'):
+                lines = item['text'].splitlines()
+                self.assertFalse(any(line.startswith('python ') for line in lines))
+                self.assertFalse(any('activate' in line for line in lines))
+            for platform, interpreter in [('unix', '.venv/bin/python'),
+                                          ('windows', r'.\.venv\Scripts\python.exe')]:
+                command, = page.select('id', 'build-command-' + platform)
+                self.assertTrue(all(line.startswith(interpreter + ' ') for line in command['text'].splitlines()))
+
     def test_inline_resources_are_accessible_readable_and_use_frozen_configuration(self):
         model = json.loads((ROOT / 'reproducibility/FINAL_MODEL.json').read_text())
         expected = [model['model_revision'], ', '.join(map(str, model['seeds'])), str(model['selected_epoch']),
