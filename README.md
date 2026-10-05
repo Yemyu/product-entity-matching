@@ -1,6 +1,6 @@
 # Product Entity Matching
 
-**English** | [简体中文](README.zh-CN.md)
+**🌐 English** | [🇨🇳 简体中文](README.zh-CN.md)
 
 **[Project site](https://yemyu.github.io/product-entity-matching/showcase/en/index.html) · [Notebook](notebooks/product-matching-walkthrough.ipynb) · [Reproduction guide](docs/REPRODUCIBILITY.md)**
 

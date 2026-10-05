@@ -1,6 +1,6 @@
 # 解读与局限
 
-[English](../LIMITATIONS.md) | **简体中文**
+[🌐 English](../LIMITATIONS.md) | **🇨🇳 简体中文**
 
 ## 评价范围
 

@@ -1,6 +1,6 @@
 # 复现说明
 
-[English](../REPRODUCIBILITY.md) | **简体中文**
+[🌐 English](../REPRODUCIBILITY.md) | **🇨🇳 简体中文**
 
 ## 复现状态
 

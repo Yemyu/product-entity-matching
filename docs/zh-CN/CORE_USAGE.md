@@ -1,6 +1,6 @@
 # 命令与输入指南
 
-[English](../CORE_USAGE.md) | **简体中文**
+[🌐 English](../CORE_USAGE.md) | **🇨🇳 简体中文**
 
 ## 从这里开始
 

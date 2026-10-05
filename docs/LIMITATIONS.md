@@ -1,6 +1,6 @@
 # Interpretation and limitations
 
-**English** | [简体中文](zh-CN/LIMITATIONS.md)
+**🌐 English** | [🇨🇳 简体中文](zh-CN/LIMITATIONS.md)
 
 ## Evaluation scope
 

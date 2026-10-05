@@ -1,6 +1,6 @@
 # 双语静态研究展示
 
-[English](README.md) | **简体中文**
+[🌐 English](README.md) | **🇨🇳 简体中文**
 
 打开[中文页面](zh-CN/index.html)或[英文页面](en/index.html)。每种语言均有完整的
 概览、数据与方法、实验结果、复现四页。语言按钮跳到当前页的另一语言版本；

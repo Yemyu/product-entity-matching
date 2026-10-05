@@ -1,6 +1,6 @@
 # Reproducibility
 
-**English** | [简体中文](zh-CN/REPRODUCIBILITY.md)
+**🌐 English** | [🇨🇳 简体中文](zh-CN/REPRODUCIBILITY.md)
 
 ## Reproduction status
 

@@ -1,6 +1,6 @@
 # Model card
 
-**English** | [简体中文](zh-CN/MODEL_CARD.md)
+**🌐 English** | [🇨🇳 简体中文](zh-CN/MODEL_CARD.md)
 
 ## Purpose and inputs
 

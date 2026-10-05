@@ -1,6 +1,6 @@
 # 数据卡
 
-[English](../DATA_CARD.md) | **简体中文**
+[🌐 English](../DATA_CARD.md) | **🇨🇳 简体中文**
 
 ## 来源、数据用途与范围
 

@@ -11,6 +11,12 @@ prepared/
 predictions/
 runs/
 private/
+# Local project notes and coordination files.
+/handoff/
+/docs/learning/
+/AGENTS.md
+/CURRENT_STATUS.md
+/PROJECT_CONTEXT.md
 __pycache__/
 *.py[cod]
 .DS_Store

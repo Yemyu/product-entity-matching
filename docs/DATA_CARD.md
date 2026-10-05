@@ -1,6 +1,6 @@
 # Data card
 
-**English** | [简体中文](zh-CN/DATA_CARD.md)
+**🌐 English** | [🇨🇳 简体中文](zh-CN/DATA_CARD.md)
 
 ## Source, roles and scope
 

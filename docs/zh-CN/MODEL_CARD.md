@@ -1,6 +1,6 @@
 # 模型卡
 
-[English](../MODEL_CARD.md) | **简体中文**
+[🌐 English](../MODEL_CARD.md) | **🇨🇳 简体中文**
 
 ## 用途与输入
 

@@ -1,6 +1,6 @@
 # Code map
 
-**English** | [简体中文](zh-CN/CODE_MAP.md)
+**🌐 English** | [🇨🇳 简体中文](zh-CN/CODE_MAP.md)
 
 ## Package and entry point
 

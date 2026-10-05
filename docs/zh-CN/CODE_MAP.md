@@ -1,6 +1,6 @@
 # 代码地图
 
-[English](../CODE_MAP.md) | **简体中文**
+[🌐 English](../CODE_MAP.md) | **🇨🇳 简体中文**
 
 ## 程序包与入口
 

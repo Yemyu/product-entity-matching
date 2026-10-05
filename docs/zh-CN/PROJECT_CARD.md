@@ -1,6 +1,6 @@
 # 项目说明
 
-[English](../PROJECT_CARD.md) | **简体中文**
+[🌐 English](../PROJECT_CARD.md) | **🇨🇳 简体中文**
 
 ## 任务与已完成的工作
 

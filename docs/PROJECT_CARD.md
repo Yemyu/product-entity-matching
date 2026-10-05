@@ -1,6 +1,6 @@
 # Project brief
 
-**English** | [简体中文](zh-CN/PROJECT_CARD.md)
+**🌐 English** | [🇨🇳 简体中文](zh-CN/PROJECT_CARD.md)
 
 ## Task and delivered work
 

@@ -1,6 +1,6 @@
 # 商品实体匹配
 
-[English](README.md) | **简体中文**
+[🌐 English](README.md) | **🇨🇳 简体中文**
 
 **[项目展示](https://yemyu.github.io/product-entity-matching/showcase/zh-CN/index.html) · [Notebook](notebooks/product-matching-walkthrough.zh-CN.ipynb) · [复现指南](docs/zh-CN/REPRODUCIBILITY.md)**
 

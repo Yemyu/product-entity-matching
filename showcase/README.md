@@ -1,6 +1,6 @@
 # Bilingual static research site
 
-**English** | [简体中文](README.zh-CN.md)
+**🌐 English** | [🇨🇳 简体中文](README.zh-CN.md)
 
 Open [English](en/index.html) or [简体中文](zh-CN/index.html). Each language has
 four complete HTML pages: overview, data and method, results, and reproduction.

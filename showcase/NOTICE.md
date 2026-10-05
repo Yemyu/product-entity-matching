@@ -1,6 +1,6 @@
 # Website attribution and license scope / 网站来源与许可范围
 
-[English](#english) | [简体中文说明](#zh-cn)
+[🌐 English](#english) | [🇨🇳 简体中文说明](#zh-cn)
 
 <a id="english"></a>
 
@@ -39,15 +39,16 @@ of those artifacts is redistributed here.
 Bulma v0.9.1 is included as the original local layout CSS. It has its own **MIT**
 license; its file header and [original license](assets/vendor/BULMA-LICENSE) are
 retained. No Font Awesome, Academicons, external font, video or carousel asset
-is included. The source reads of all three template files were verified against
-the lengths and hashes in `UPSTREAM.json` before adaptation; only necessary
-markup and CSS were retained. `bulma.min.css` is retained byte for byte.
+is included. `UPSTREAM.json` records the lengths and hashes of the pinned
+template files. `bulma.min.css` is retained byte for byte.
+
+The information hierarchy also draws on the [VitePress documentation](https://vitepress.dev/guide/what-is-vitepress) and [scikit-learn user guide](https://scikit-learn.org/stable/user_guide.html). Their text and CSS are not copied.
 
 <a id="zh-cn"></a>
 
 ## 简体中文说明
 
-[English](#english) | **简体中文说明**
+[🌐 English](#english) | **🇨🇳 简体中文说明**
 
 本站基于 Academic Project Page Template 的标题、资源按钮、居中内容区、分节、
 页脚及部分样式改编，保留其来源、Nerfies来源、许可链接和改动说明。网站派生
@@ -59,7 +60,6 @@ markup and CSS were retained. `bulma.min.css` is retained byte for byte.
 自制教学示例、方法图、聚合结果
 图表及复现入口。示例商品没有经过模型预测。保留的 Bulma CSS 另适用其 MIT
 许可，文件头及原许可文本均保留。
-
-The information hierarchy also draws on the [VitePress documentation](https://vitepress.dev/guide/what-is-vitepress) and [scikit-learn user guide](https://scikit-learn.org/stable/user_guide.html). Their text and CSS are not copied.
+固定模板文件的长度与哈希记录于 `UPSTREAM.json`；Bulma CSS 按原字节保留。
 
 信息层级还参考了上述 VitePress 文档和 scikit-learn 用户指南；未复制其正文或CSS。

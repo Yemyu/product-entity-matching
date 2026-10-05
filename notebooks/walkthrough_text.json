@@ -21,7 +21,7 @@
       "native_model_compact_exact": "Equal compact model numbers",
       "native_model_same_letters_different_digits": "Same model letters, different digits"
     },
-    "label_rejected": "The evaluation input rejected a target label, as expected.",
+    "label_rejected": "The evaluation input rejected a target label.",
     "label_accepted": "The evaluation input incorrectly accepted a target label.",
     "idf_unchanged": "The fit-only IDF state is unchanged.",
     "mean": "Invented probabilities: equal mean",
@@ -32,16 +32,12 @@
     "confusion": "Saved aggregate counts",
     "f1_recovered": "F1 recovered from the saved counts",
     "evidence": {
-      "core_tests": "Core tests recorded with the replay",
-      "fixed_artifact_replay_cli_commands": "Commands in the existing-weight replay",
-      "independently_checked_result_groups": "Independently checked result groups",
       "max_prediction_difference": "Saved replay: maximum prediction difference",
       "new_training_in_replay": "New training during the replay",
       "fresh_training_reproduced": "Full retraining validated"
     },
     "yes": "yes",
     "no": "no",
-    "done": "Walkthrough complete: aggregate arithmetic and synthetic feature/metric examples.",
     "f1_c0": "F1 difference versus C0 at separately calibrated cutoffs",
     "error_counts": "saved error counts",
     "case": "Synthetic input",
@@ -73,7 +69,7 @@
       "native_model_compact_exact": "紧凑型号完全一致",
       "native_model_same_letters_different_digits": "型号字母相同、数字不同"
     },
-    "label_rejected": "评价输入按预期拒绝了目标标签。",
+    "label_rejected": "评价输入拒绝了目标标签。",
     "label_accepted": "评价输入错误地接受了目标标签。",
     "idf_unchanged": "仅由训练数据拟合的 IDF 状态没有改变。",
     "mean": "编写的示例概率：等权均值",
@@ -84,16 +80,12 @@
     "confusion": "已保存的聚合计数",
     "f1_recovered": "由已保存计数复算的 F1",
     "evidence": {
-      "core_tests": "回放记录中的核心测试数",
-      "fixed_artifact_replay_cli_commands": "现有权重回放的命令数",
-      "independently_checked_result_groups": "独立核对的结果组数",
       "max_prediction_difference": "已记录的回放：最大预测差值",
       "new_training_in_replay": "回放期间是否重新训练",
       "fresh_training_reproduced": "是否已验证完整重训"
     },
     "yes": "是",
     "no": "否",
-    "done": "讲解完成：聚合结果复算与合成特征、指标示例。",
     "f1_c0": "各自校准阈值下，相较 C0 的 F1 差值",
     "error_counts": "已保存的误差计数",
     "case": "合成输入",
