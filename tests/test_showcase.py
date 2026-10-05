@@ -79,6 +79,41 @@ class ShowcaseTests(unittest.TestCase):
         self.assertEqual(before, {p: (hashlib.sha256(p.read_bytes()).hexdigest(), p.stat().st_mtime_ns)
                                   for p in paths if p.is_file()})
 
+    def test_inline_resources_are_accessible_readable_and_use_frozen_configuration(self):
+        model = json.loads((ROOT / 'reproducibility/FINAL_MODEL.json').read_text())
+        expected = [model['model_revision'], ', '.join(map(str, model['seeds'])), str(model['selected_epoch']),
+                    f"{model['micro_batch']} / {model['effective_batch']}",
+                    f"{model['encoder_lr']} / {model['head_lr']}",
+                    f"{model['scheduler_epochs']} / {model['warmup_fraction']}",
+                    f"{model['weight_decay']} / {model['gradient_clip']}", str(model['dropout'])]
+        for language in ('en', 'zh-CN'):
+            page = self.page(language, 'method')
+            panels = {item['attrs']['data-resource-panel']: item for item in page.select('data-resource-panel')}
+            self.assertEqual(set(panels), {'model', 'config'})
+            for button in page.select('data-resource-toggle'):
+                panel = panels[button['attrs']['data-resource-toggle']]
+                self.assertEqual(button['attrs']['role'], 'button')
+                self.assertEqual(button['attrs']['aria-controls'], panel['attrs']['id'])
+                self.assertEqual(button['attrs']['href'], '#' + panel['attrs']['id'])
+                self.assertNotIn('hidden', panel['attrs'])  # static fallback if JS fails
+                self.assertEqual(len(page.select('id', panel['attrs']['aria-labelledby'])), 1)
+            config = panels['config']
+            cells = []
+            for item in page.select('class', 'config-value'):
+                ancestor = item['parent']
+                while ancestor is not None and ancestor is not config:
+                    ancestor = ancestor['parent']
+                if ancestor is config:
+                    cells.append(item['text'])
+            self.assertEqual(len(cells), 10)
+            self.assertEqual(cells[:8], expected)
+            self.assertIn(str(self.facts['metrics']['C+']['threshold']), config['text'])
+            for checkpoint in model['checkpoints']:
+                self.assertIn(checkpoint['sha256'], config['text'])
+                self.assertIn(f"{checkpoint['bytes']:,} bytes", config['text'])
+            for name in ('index', 'results', 'reproduce'):
+                self.assertFalse(self.page(language, name).select('data-resource-panel'))
+
     def test_both_languages_show_original_metrics_in_plots_and_table(self):
         for language in ('en', 'zh-CN'):
             page = self.page(language, 'results')

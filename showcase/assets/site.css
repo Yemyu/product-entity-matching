@@ -78,6 +78,34 @@ h3 { font-size: 19px; line-height: 1.4; font-weight: 650; margin: 0 0 12px; }
 .publication-title:lang(zh-CN) { font-size: 35px !important; letter-spacing: -.015em; }
 .hero-description { max-width: 920px; margin: 0 0 20px; font-size: 17px; line-height: 1.8; color: var(--text-secondary); }
 .publication-links { display: flex; flex-wrap: wrap; justify-content: flex-start; gap: 9px; }
+.resource-toggle { gap: 12px; }
+.resource-chevron { font-size: 20px; line-height: 1; }
+.js-enabled .resource-toggle[aria-expanded="true"] .resource-chevron { transform: rotate(180deg); }
+.js-enabled .resource-toggle[aria-expanded="true"] { outline: 2px solid var(--palette-border-strong); outline-offset: 3px; }
+.resource-panels { min-width: 0; }
+.resource-panel { margin-top: 22px; padding: 26px; border: 1px solid var(--palette-border-strong); border-top: 3px solid var(--palette-accent); border-radius: 5px; background: var(--palette-paper); text-align: left; }
+.resource-panel h2 { margin-bottom: 18px; font: 700 26px/1.4 Georgia, "Songti SC", serif; }
+.resource-panel p { font-size: 15px; line-height: 1.8; }
+.resource-summary-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; margin: 24px 0 8px; }
+.resource-summary-grid article + article { border-left: 1px solid var(--palette-border); padding-left: 22px; }
+.resource-reading-links { display: flex; flex-wrap: wrap; gap: 12px 24px; padding: 16px 0; border-top: 1px solid var(--palette-border); font-size: 14px; }
+.resource-panel .caption { margin: 0; color: var(--palette-secondary); font-size: 13px; }
+.resource-panel code { overflow-wrap: anywhere; white-space: normal; }
+.resource-cutoff { display: flex; flex-wrap: wrap; gap: 8px 18px; padding: 12px 0; border-bottom: 1px solid var(--palette-border); }
+.checkpoint-details { margin-top: 18px; font-size: 14px; }
+.checkpoint-details summary { cursor: pointer; color: var(--palette-accent); font-weight: 650; }
+.checkpoint-details p { margin: 12px 0; font-size: 14px; }
+.checkpoint-details ul { margin: 0; padding: 0; list-style: none; }
+.checkpoint-details li { display: grid; grid-template-columns: auto 1fr; gap: 5px 20px; padding: 12px 0; border-top: 1px solid var(--palette-border); }
+.checkpoint-details li code { grid-column: 1 / -1; font-size: 12px; }
+@media (max-width: 900px) {
+  .resource-summary-grid { grid-template-columns: 1fr; gap: 14px; }
+  .resource-summary-grid article + article { border-left: 0; padding-left: 0; border-top: 1px solid var(--palette-border); padding-top: 18px; }
+}
+@media (max-width: 650px) {
+  .resource-panel { padding: 18px 14px; }
+  .resource-panel h2 { font-size: 23px; }
+}
 .hero-facts { display: flex; flex-wrap: wrap; gap: 16px 0; margin-top: 23px; padding-top: 17px; border-top: 1px solid var(--palette-border); color: var(--palette-secondary); font-size: 13px; }
 .hero-facts > * { display: flex; flex-direction: column; gap: 3px; min-width: 0; padding: 0 24px; border-left: 1px solid var(--palette-border); }
 .hero-facts > :first-child { padding-left: 0; border-left: 0; }

@@ -170,8 +170,8 @@
     },
     {
       "path": "scripts/build_showcase.py",
-      "bytes": 45382,
-      "sha256": "859e44c64eb79c6178cb974012bda93cf09d574f4bbd4a4a8bdfb6f72a4faa8d"
+      "bytes": 49568,
+      "sha256": "29cd630d334fbc53e1c2942f7ae384fa28f7097c6f2e4ee90ebcd167ecfa3d38"
     },
     {
       "path": "scripts/matching.py",
@@ -215,13 +215,13 @@
     },
     {
       "path": "showcase/README.md",
-      "bytes": 2881,
-      "sha256": "00947eb56917d411b557b55954125c0c5b9cfea557aeacf487f9fdde4345d625"
+      "bytes": 3184,
+      "sha256": "48ffee882da854a343e9ee9c9ce80ce3ba4faf4ad4a398bff9e38193339b47f2"
     },
     {
       "path": "showcase/README.zh-CN.md",
-      "bytes": 2663,
-      "sha256": "8899bd2b1975649c0cbb870783ca31dc13a8cf32e7a3912937a371955cb80bc8"
+      "bytes": 2958,
+      "sha256": "fdb5b98ec8fc0004bd620d3067e8e40c7d7aa2ed57c6f773c73a13ecca0322cc"
     },
     {
       "path": "showcase/UPSTREAM.json",
@@ -245,13 +245,13 @@
     },
     {
       "path": "showcase/assets/site.css",
-      "bytes": 51072,
-      "sha256": "d5a3036bc357136bf44c4b1bfdb4c769fbfd20388206b93c1ea739fa5c9bf9d9"
+      "bytes": 53330,
+      "sha256": "eefa83d8e8b07e84b7c552c0ff94d8b86cde796dfd2bb16a4c4cfd2b877fd63d"
     },
     {
       "path": "showcase/assets/site.js",
-      "bytes": 7755,
-      "sha256": "f067c0330e5b2669697f2de13e1ebca7fc223cbbd4b3d70b54fa3a15ea2eafda"
+      "bytes": 10194,
+      "sha256": "72673fe3084f8b9894f9c8a2dfb309ef3bb5b7d7e54835fe053a05f177a073ec"
     },
     {
       "path": "showcase/assets/vendor/BULMA-LICENSE",
@@ -275,48 +275,48 @@
     },
     {
       "path": "showcase/en/index.html",
-      "bytes": 21822,
-      "sha256": "af3ba1836bfd68e8fd94e8c130fdc46d30717f7ba86b227e9ae62b76550f5d3d"
+      "bytes": 21853,
+      "sha256": "d0aaeb7e80f61f42adfd92f4b06cac5d0b5d4eb64effe5b73c5f9c6e7376b51e"
     },
     {
       "path": "showcase/en/method.html",
-      "bytes": 29445,
-      "sha256": "d153a6e944d89ce7711582d982302b7ebf8d1b95fbfcef28ef80e9952f41715b"
+      "bytes": 33711,
+      "sha256": "4fdae4de63b00d40461ee9d025d017444eb630ca87e737c6a0544a3062551705"
     },
     {
       "path": "showcase/en/reproduce.html",
-      "bytes": 16091,
-      "sha256": "bf3da0f9fc94ed1aa37ea20885517e79ecac4500e85783e92691d891bc628510"
+      "bytes": 16122,
+      "sha256": "6a9bb56cef3fb91831b2dee27a627636f66a4f5107fe542782be362a3744491e"
     },
     {
       "path": "showcase/en/results.html",
-      "bytes": 21998,
-      "sha256": "70dd993fbefa4107c3ddbb526bc434548340a4cf52e48308939014e0e8663433"
+      "bytes": 22029,
+      "sha256": "0d62eb828755d11c497c055fc0acc0912f23246e2c9d1e2318d08600f5047ad3"
     },
     {
       "path": "showcase/templates/page.html",
-      "bytes": 2493,
-      "sha256": "344c3a1a47215cb5b2ad86dac345ddd9a0b1e3258f523119116dc6953f7e454e"
+      "bytes": 2561,
+      "sha256": "4aa69a7326fea37782ac2a98e890e14d6bcfa761f25d2d173832c1b27ee6fbc2"
     },
     {
       "path": "showcase/zh-CN/index.html",
-      "bytes": 20818,
-      "sha256": "163c91b9fb1919f8399f7c5c1adb8fe93128598a230742c8765babad13e66420"
+      "bytes": 20849,
+      "sha256": "37fcaba6cb1af228daa0012e28f1cb2f15f4a04192969f0ff6a5a937cba72fb8"
     },
     {
       "path": "showcase/zh-CN/method.html",
-      "bytes": 27523,
-      "sha256": "98811d7ef90f2a836ef5230577f4da2d8d1e4816fac094a5b60e3df75a4c1ea6"
+      "bytes": 31525,
+      "sha256": "99e6fbb17731264befbd252b3c1fbf7e5a73adb1e938d3a4822e9c0b3a4025f6"
     },
     {
       "path": "showcase/zh-CN/reproduce.html",
-      "bytes": 15086,
-      "sha256": "04973b4727038dbe2caed0e65f917ea80348fedfb55fd2552b4ed5036be7c2cc"
+      "bytes": 15117,
+      "sha256": "8e15b142574b242eb790e6ab9289e7020c96e6744be852f98a1604f8d509feed"
     },
     {
       "path": "showcase/zh-CN/results.html",
-      "bytes": 20897,
-      "sha256": "799c251619c6150a3a12cec171773ce205d39ab4fa6f91e8a21a27b320b3396f"
+      "bytes": 20928,
+      "sha256": "111fd0ea54a57da320721eabfcd74daa26081c756b8d6c077c35a9c0aa4284b3"
     },
     {
       "path": "src/product_matching/__init__.py",
@@ -435,8 +435,8 @@
     },
     {
       "path": "tests/test_showcase.py",
-      "bytes": 10327,
-      "sha256": "9be1ee6de8abca144056c383bbe5314ba0e9e57efe71b51891cf7d8a682fcf7b"
+      "bytes": 12670,
+      "sha256": "30f00e7ee87d73bfd118f9e829bd651e216fddd8ef3a975ad06a0a83f6d2653f"
     },
     {
       "path": "tests/test_source_reconstruction.py",

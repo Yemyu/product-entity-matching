@@ -5,10 +5,13 @@
 Open [English](en/index.html) or [简体中文](zh-CN/index.html). Each language has
 four complete HTML pages: overview, data and method, results, and reproduction.
 The language link goes to the corresponding page. With JavaScript enabled it
-also retains the current anchor, AP/F1 selection and teaching scenario. Text,
+also retains the current anchor, AP/F1 selection, teaching scenario and open model/configuration panel. Text,
 figures and tables can be read without JavaScript; both metric plots and all
 three teaching scenarios then remain visible. JavaScript adds scenario and
-metric selection, section navigation and command copying.
+metric selection, section navigation and command copying. On the data and method page,
+the Model card and Final configuration buttons expand readable panels below the buttons;
+click again to close or press Escape while focus is in the panel. Without JavaScript,
+both panels remain visible and the buttons link to their headings.
 
 Create the project environment in the [README quickstart](../README.md#quickstart), then run from the repository root:
 

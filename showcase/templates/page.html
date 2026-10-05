@@ -11,8 +11,8 @@
   <link rel="alternate" hreflang="zh-CN" href="../zh-CN/{{PAGE_FILE}}">
   <link rel="stylesheet" href="../assets/vendor/bulma.min.css">
   <link rel="stylesheet" href="../assets/academic.css">
-  <link rel="stylesheet" href="../assets/site.css">
-  <script defer src="../assets/site.js"></script>
+  <link rel="stylesheet" href="../assets/site.css?v={{ASSET_VERSION}}">
+  <script defer src="../assets/site.js?v={{ASSET_VERSION}}"></script>
 </head>
 <body data-page="{{PAGE_KEY}}" data-language="{{LANG}}">
   <a class="skip-link" href="#main-content">{{SKIP}}</a>
@@ -35,6 +35,7 @@
             <p class="hero-description">{{LEAD}}</p>
             <p class="model-definition">{{MODEL_DEFINITION}}</p>
             <div class="publication-links">{{HERO_LINKS}}</div>
+            {{HERO_PANELS}}
             {{HERO_FACTS}}
           </div>
         </div>

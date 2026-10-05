@@ -7,6 +7,9 @@
   const languageBase = languageLink ? languageLink.getAttribute('href') : '';
   const caseButtons = Array.from(document.querySelectorAll('[data-example-case]'));
   const caseKeys = new Set(caseButtons.map(button => button.dataset.exampleCase));
+  const resourceButtons = Array.from(document.querySelectorAll('[data-resource-toggle]'));
+  const resourcePanels = Array.from(document.querySelectorAll('[data-resource-panel]'));
+  const resourceKeys = new Set(resourceButtons.map(button => button.dataset.resourceToggle));
 
   function syncLanguage() {
     if (!languageLink) return;
@@ -14,12 +17,57 @@
     const current = new URL(location.href);
     const metric = current.searchParams.get('metric');
     const example = current.searchParams.get('case');
+    const resource = current.searchParams.get('panel');
     if (metric === 'ap' || metric === 'f1') target.searchParams.set('metric', metric);
     else target.searchParams.delete('metric');
     if (example && caseKeys.has(example)) target.searchParams.set('case', example);
     else target.searchParams.delete('case');
+    if (resourceKeys.has(resource)) target.searchParams.set('panel', resource);
+    else target.searchParams.delete('panel');
     target.hash = location.hash;
     languageLink.setAttribute('href', languageBase + target.search + target.hash);
+  }
+
+  function selectResource(key, updateURL) {
+    if (!resourcePanels.length) return;
+    const selected = resourceKeys.has(key) ? key : null;
+    resourcePanels.forEach(panel => { panel.hidden = panel.dataset.resourcePanel !== selected; });
+    resourceButtons.forEach(button => {
+      button.setAttribute('aria-expanded', String(button.dataset.resourceToggle === selected));
+    });
+    if (updateURL) {
+      const target = new URL(location.href);
+      if (selected) target.searchParams.set('panel', selected);
+      else target.searchParams.delete('panel');
+      if (resourcePanels.some(panel => '#' + panel.id === target.hash)) target.hash = '';
+      history.replaceState(null, '', target.href);
+    }
+    syncLanguage();
+  }
+  if (resourcePanels.length) {
+    const current = new URL(location.href);
+    // Anchor links still work if scripts are unavailable or a resource is linked directly.
+    const initial = current.searchParams.get('panel') || resourcePanels.find(panel => '#' + panel.id === current.hash)?.dataset.resourcePanel;
+    selectResource(initial, false);
+    resourceButtons.forEach(button => {
+      button.addEventListener('click', event => {
+        event.preventDefault();
+        selectResource(button.getAttribute('aria-expanded') === 'true' ? null : button.dataset.resourceToggle, true);
+      });
+      button.addEventListener('keydown', event => {
+        if (event.key === ' ') {
+          event.preventDefault();
+          button.click();
+        }
+      });
+    });
+    document.addEventListener('keydown', event => {
+      if (event.key !== 'Escape') return;
+      const active = resourceButtons.find(button => button.getAttribute('aria-expanded') === 'true');
+      if (!active || (!resourcePanels.some(panel => panel.contains(document.activeElement)) && document.activeElement !== active)) return;
+      selectResource(null, true);
+      active.focus();
+    });
   }
 
   const metricButtons = Array.from(document.querySelectorAll('.metric-button[data-metric]'));
@@ -147,6 +195,7 @@
   window.addEventListener('resize', scheduleToc, { passive: true });
   window.addEventListener('hashchange', () => { syncLanguage(); scheduleToc(); });
   window.addEventListener('popstate', () => {
+    selectResource(new URL(location.href).searchParams.get('panel'), false);
     selectMetric(new URL(location.href).searchParams.get('metric'), false);
     syncLanguage();
     scheduleToc();

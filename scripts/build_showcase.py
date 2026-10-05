@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import html
 import io
 import json
@@ -222,12 +223,33 @@ class Renderer:
             features.append(f'<details id="feature-group-{i+1}"><summary>{esc(self.content["feature_group_names"][i])}<span class="feature-count">{group["count"]} {self.t("feature_count")}</span></summary><p class="feature-note">{esc(self.content["feature_group_p"][i])}</p><ul>{"".join(entries)}</ul></details>')
             offset += group["count"]
         feature_body = self.stage(2) + self.p("features_intro", "section-intro") + f'<div class="feature-groups">{"".join(features)}</div>' + f'<p class="caption">{self.link("../../reproducibility/FEATURES.json",self.content["feature_source"],download=True)}</p>'
+        architecture = self.stage(3) + self.p("architecture_intro", "section-intro") + self.diagram()
+        config = self.stage(5) + self.p("configuration_intro", "section-intro") + self.configuration_table() + self.p("method_scope", "caption")
+        return self.section("processing", "processing_title", processing, "01") + self.section("roles", "roles_title", roles, "02", True) + self.section("features", "features_title", feature_body, "03") + self.section("architecture", "architecture_title", architecture, "04", True) + self.section("aggregation", "model_title", self.aggregation(), "05") + self.section("configuration", "configuration_title", config, "06")
+
+    def configuration_table(self) -> str:
         m = self.model
         configs = [m["model_revision"], ", ".join(map(str, m["seeds"])), m["selected_epoch"], f'{m["micro_batch"]} / {m["effective_batch"]}', f'{m["encoder_lr"]} / {m["head_lr"]}', f'{m["scheduler_epochs"]} / {m["warmup_fraction"]}', f'{m["weight_decay"]} / {m["gradient_clip"]}', m["dropout"], self.content["precision_training"], self.content["precision_inference"]]
-        table = '<div class="table-wrap config-table"><table class="table"><tbody>' + ''.join(f'<tr><th scope="row" class="config-key">{esc(self.content["config_labels"][i])}</th><td class="config-value">{esc(value)}</td></tr>' for i, value in enumerate(configs)) + '</tbody></table></div>'
-        architecture = self.stage(3) + self.p("architecture_intro", "section-intro") + self.diagram()
-        config = self.stage(5) + self.p("configuration_intro", "section-intro") + table + self.p("method_scope", "caption")
-        return self.section("processing", "processing_title", processing, "01") + self.section("roles", "roles_title", roles, "02", True) + self.section("features", "features_title", feature_body, "03") + self.section("architecture", "architecture_title", architecture, "04", True) + self.section("aggregation", "model_title", self.aggregation(), "05") + self.section("configuration", "configuration_title", config, "06")
+        rows = ''.join(f'<tr><th scope="row" class="config-key">{esc(label)}</th><td class="config-value">{esc(value)}</td></tr>' for label, value in zip(self.content["config_labels"], configs))
+        return '<div class="table-wrap config-table"><table class="table"><tbody>' + rows + '</tbody></table></div>'
+
+    def method_resources(self) -> str:
+        """Readable inline resources; all values are rendered locally, with no fetch."""
+        m = self.model
+        def block(zh, en, zp, ep):
+            return f'<article><h3>{self.tr(zh,en)}</h3><p>{self.tr(zp,ep)}</p></article>'
+        overview = block("输入", "Input", "一对零售商商品记录。标题、品牌、原生型号和类别组成文本输入；描述、价格、币种及缺失状态通过比较特征参与评分。", "A pair of retailer listings. Title, brand, native model number and category form the text input; description, price, currency and missing-field states contribute through comparison features.")
+        overview += block("模型结构", "Architecture", f'RoBERTa-base联合编码商品对，将768维文本表示投影为64维，与{m["feature_count"]}项比较特征连接。分类头为106 → 64 → 1，输出一个原始分数（logit）；训练更新编码器与分类头。', f'RoBERTa-base jointly encodes the pair and projects its 768-dimensional text representation to 64 dimensions. This is concatenated with {m["feature_count"]} comparison features. A 106 → 64 → 1 classifier produces a raw score (logit); training updates both encoder and classifier.')
+        overview += block("评分与判断", "Scoring and decision", f'每个种子先对AB、BA两个记录顺序的logit取均值，再用sigmoid转成概率。对种子{self.context["seeds"]}的概率等权平均；最终分数不小于{self.context["threshold"]}时判为匹配。', f'Within each seed, average logits for the AB and BA record orders, then apply sigmoid to obtain a probability. Average probabilities equally across seeds {self.context["seeds"]}. A final score at or above {self.context["threshold"]} is classified as a match.')
+        model_body = self.p("model_definition") + f'<div class="resource-summary-grid">{overview}</div>'
+        model_body += f'<div class="resource-reading-links">{self.link("#architecture", self.tr("查看结构图", "Architecture diagram"))}{self.link("#features", self.tr("查看42项特征", "The 42 features"))}</div>' + self.p("method_scope", "caption")
+        config_body = self.p("configuration_intro") + self.configuration_table()
+        config_body += f'<p class="resource-cutoff"><strong>{self.tr("校准阈值", "Calibration cutoff")}</strong><code>{self.context["threshold"]}</code></p>'
+        checkpoints = ''.join(f'<li><strong>{self.tr("种子", "Seed")} {item["seed"]}</strong><span>{item["bytes"]:,} bytes</span><code>{esc(item["sha256"])}</code></li>' for item in m["checkpoints"])
+        config_body += f'<details class="checkpoint-details"><summary>{self.tr("检查点身份（SHA-256）", "Checkpoint identities (SHA-256)")}</summary><p>{self.tr("哈希用于核对本地权重是否对应这些检查点。公开仓库不分发模型权重。", "Hashes identify the local weights for these checkpoints. Model weights are not redistributed in the public repository.")}</p><ul>{checkpoints}</ul></details>'
+        bodies = (("model", model_body), ("config", config_body))
+        panels = ''.join(f'<section id="{key}-panel" class="resource-panel" data-resource-panel="{key}" aria-labelledby="{key}-panel-title"><h2 id="{key}-panel-title">{esc(self.content["pages"]["method"]["links"][i])}</h2>{body}</section>' for i, (key, body) in enumerate(bodies))
+        return f'<div class="resource-panels">{panels}</div>'
 
     def plot(self, metric: str) -> str:
         rows = []
@@ -346,12 +368,16 @@ class Renderer:
             "reproduce": ("#quickstart", self.doc("CORE_USAGE")),
         }[page]
         hero_links = ''.join(self.link(url, entry["links"][i], "external-link button is-normal " + ("is-dark" if i == 0 else "is-light"), page == "results" and i == 0) for i, url in enumerate(urls))
+        if page == "method":
+            hero_links = ''.join(f'<a id="{key}-toggle" href="#{key}-panel" role="button" class="button resource-toggle {"is-dark" if i == 0 else "is-light"}" data-resource-toggle="{key}" aria-controls="{key}-panel" aria-expanded="true">{esc(entry["links"][i])}<span class="resource-chevron" aria-hidden="true">⌄</span></a>' for i, key in enumerate(("model", "config")))
         next_page = PAGES[(index+1) % len(PAGES)]
         next_link = f'<a class="next-link" href="{next_page}.html"><span><span class="next-eyebrow">{self.t("next")}</span>{esc(c["pages"][next_page]["title"])}</span><span aria-hidden="true">→</span></a>'
         body = {"index": self.overview, "method": self.method, "results": self.results_page, "reproduce": self.reproduce}[page]()
         mapping = {"LANG": self.language, "DESCRIPTION": esc(self.fill(entry["description"])), "PAGE_TITLE": esc(entry["title"]), "PROJECT_NAME": self.t("project"), "PAGE_FILE": page+".html", "PAGE_KEY": page, "SKIP": self.t("skip"), "BRAND": self.t("brand"), "NAV_LABEL": self.t("nav_label"), "NAVIGATION": navigation, "LANGUAGE_URL": "../"+self.other+"/"+page+".html", "OTHER_LANG": self.other, "LANGUAGE_LABEL": self.t("language_label"), "LANGUAGE_TEXT": self.t("language_text"), "EYEBROW": esc(entry["eyebrow"]), "HEADING": esc(self.fill(entry["heading"])), "LEAD": esc(self.fill(entry["lead"])), "HERO_LINKS": hero_links, "HERO_FACTS": self.hero_facts() if page=="index" else "", "BODY": body, "NEXT_LINK": next_link, "FOOTER_SCOPE": self.t("footer_scope"), "CREDIT": c["credit"], "LICENSE_SCOPE": c["license_scope"], "NOTICE_LABEL": self.t("notice"), "PAGE_TOC": self.toc(page)}
         mapping["THEME_COLOR"] = "#f5efe4"
         mapping["MODEL_DEFINITION"] = self.t("model_definition")
+        mapping["HERO_PANELS"] = self.method_resources() if page == "method" else ""
+        mapping["ASSET_VERSION"] = hashlib.sha256((SITE / "assets/site.js").read_bytes() + (SITE / "assets/site.css").read_bytes()).hexdigest()[:12]
         output = re.sub(r"\{\{([A-Z_]+)\}\}", lambda match: mapping[match[1]], template)
         assert not re.search(r"\{\{[A-Z_]+\}\}|\[\[[a-zA-Z0-9_]+\]\]", output), "Unresolved template field"
         return ("\n".join(line.rstrip() for line in output.splitlines()) + "\n").encode("utf-8")
