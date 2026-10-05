@@ -1,0 +1,30 @@
+{
+  "schema": "product-matching-final-model-v1",
+  "method": "C+",
+  "model_id": "FacebookAI/roberta-base",
+  "model_revision": "e2da8e2f811d1448a5b465c236feacd80ffbac7b",
+  "feature_count": 42,
+  "selected_epoch": 4,
+  "seeds": [42, 43, 44],
+  "aggregation": "equal_probability_mean",
+  "direction_aggregation": "sigmoid_mean_logits",
+  "training_precision": "BF16_encoder_FP32_parameters_and_head",
+  "inference_precision": "FP32",
+  "micro_batch": 2,
+  "effective_batch": 16,
+  "scheduler_epochs": 6,
+  "encoder_lr": 0.00002,
+  "head_lr": 0.0002,
+  "warmup_fraction": 0.1,
+  "weight_decay": 0.01,
+  "gradient_clip": 1.0,
+  "dropout": 0.1,
+  "roles": {"fit": 3738, "dev": 199, "calibration": 209, "evaluation": 555},
+  "checkpoints": [
+    {"seed": 42, "bytes": 496468908, "sha256": "52eaebccc61b74ce50268c11af9c65b50b7b71c354a0b60817870e902048cdd9"},
+    {"seed": 43, "bytes": 496468908, "sha256": "926d69653daabb941dab6eb213376ea4a2f850267c3b770e586e8ffaef414fd5"},
+    {"seed": 44, "bytes": 496468908, "sha256": "d68636be2327bacdb5d3557e553488efd1ab8fa4326064bab96c81a8250cef35"}
+  ],
+  "weights_redistributed": false,
+  "independent_new_sample_validation": false
+}

@@ -1,0 +1,18 @@
+# Raw data, model weights and private run evidence are intentionally excluded.
+data/
+models/
+reports/
+archives/
+.venv/
+.conda/
+__pycache__/
+*.py[cod]
+.DS_Store
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+.env
+.env.*
+*.pem
+*.key

@@ -1,0 +1,26 @@
+{
+  "template_repository": "https://github.com/eliahuhorwitz/Academic-project-page-template",
+  "commit": "d38af1ccae1ce82c3404d2820c4c646afd409f81",
+  "website_license": "CC-BY-SA-4.0",
+  "upstream_sources": [
+    {
+      "path": "index.html",
+      "bytes": 21255,
+      "sha256": "cd4f2326acf12a7e359df1e8f5c47f74992a71e48f84fd6f9044f04a3806aee0",
+      "git_blob_sha": "b511878349be39605b546c40590412134eaf64e3"
+    },
+    {
+      "path": "static/css/index.css",
+      "bytes": 14848,
+      "sha256": "2840bed03588f74948e6ee849587af5cbda9246c9db415756b41b69cd26191cf",
+      "git_blob_sha": "ca8d4b15f8f1d7faf19a00f42131231f36ede714"
+    },
+    {
+      "path": "static/css/bulma.min.css",
+      "bytes": 204030,
+      "sha256": "58b28659220961ead137cb5b346b5759562750ce703094d70fc786e0db467033",
+      "git_blob_sha": "a807a314caa0df0ddccacd6b732d83f5ffde7a89"
+    }
+  ],
+  "derivation": "Page hero, centered Bulma containers, publication resource buttons, sections and footer adapted from verified index.html. academic.css retains used source rules; site.css adapts color, spacing and layout. Bulma CSS retained byte-for-byte."
+}

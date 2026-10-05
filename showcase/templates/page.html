@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="{{LANG}}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{{DESCRIPTION}}">
+  <meta name="theme-color" content="{{THEME_COLOR}}">
+  <title>{{PAGE_TITLE}} · {{PROJECT_NAME}}</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="alternate" hreflang="en" href="../en/{{PAGE_FILE}}">
+  <link rel="alternate" hreflang="zh-CN" href="../zh-CN/{{PAGE_FILE}}">
+  <link rel="stylesheet" href="../assets/vendor/bulma.min.css">
+  <link rel="stylesheet" href="../assets/academic.css">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script defer src="../assets/site.js"></script>
+</head>
+<body data-page="{{PAGE_KEY}}" data-language="{{LANG}}">
+  <a class="skip-link" href="#main-content">{{SKIP}}</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html" aria-label="{{PROJECT_NAME}}"><span class="brand-mark" aria-hidden="true">↔</span><span>{{BRAND}}</span></a>
+      <nav aria-label="{{NAV_LABEL}}">{{NAVIGATION}}</nav>
+      <a class="language-link" href="{{LANGUAGE_URL}}" lang="{{OTHER_LANG}}" hreflang="{{OTHER_LANG}}" aria-label="{{LANGUAGE_LABEL}}">{{LANGUAGE_TEXT}}<span aria-hidden="true"> ↗</span></a>
+    </div>
+  </header>
+  <div class="report-layout">
+    <aside class="report-sidebar">{{PAGE_TOC}}</aside>
+    <main id="main-content" tabindex="-1">
+      <!-- Publication header and resource links adapted from the Academic template. -->
+      <section class="hero publication-header" id="intro">
+        <div class="hero-body">
+          <div class="container">
+            <p class="eyebrow">{{EYEBROW}}</p>
+            <h1 class="title is-1 publication-title">{{HEADING}}</h1>
+            <p class="hero-description">{{LEAD}}</p>
+            <p class="model-definition">{{MODEL_DEFINITION}}</p>
+            <div class="publication-links">{{HERO_LINKS}}</div>
+            {{HERO_FACTS}}
+          </div>
+        </div>
+      </section>
+      {{BODY}}
+      <div class="reading-next container">{{NEXT_LINK}}</div>
+    </main>
+  </div>
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div><a class="footer-project" href="index.html">{{PROJECT_NAME}}</a><p>{{FOOTER_SCOPE}}</p></div>
+      <div class="footer-credit"><p>{{CREDIT}}</p><p>{{LICENSE_SCOPE}}</p><a href="../NOTICE.md">{{NOTICE_LABEL}}</a></div>
+    </div>
+  </footer>
+</body>
+</html>

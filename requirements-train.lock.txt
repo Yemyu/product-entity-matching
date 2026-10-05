@@ -1,0 +1,9 @@
+# Direct pins for the observed Windows/Python3.11 CUDA12.6 environment.
+# Not a complete transitive or wheel-hash lock; other platforms unvalidated.
+--extra-index-url https://download.pytorch.org/whl/cu126
+numpy==2.4.6
+scikit-learn==1.9.1
+safetensors==0.8.0
+sentence-transformers==6.0.1
+transformers==5.17.0
+torch==2.8.0+cu126

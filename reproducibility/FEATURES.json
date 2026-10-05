@@ -1,0 +1,65 @@
+{
+  "schema": "product-matching-feature-order-v1",
+  "names": [
+    "title_token_jaccard",
+    "title_char_jaccard",
+    "description_token_jaccard",
+    "description_both_present",
+    "brand_equal",
+    "brand_both_present",
+    "brand_missing_any",
+    "numeric_token_jaccard",
+    "numeric_tokens_both_present",
+    "title_length_ratio",
+    "price_both_parsed",
+    "price_currency_equal",
+    "price_comparable",
+    "price_similarity",
+    "title_word_idf_cosine",
+    "title_word_idf_containment",
+    "title_char3_idf_cosine",
+    "title_compact_char3_idf_cosine",
+    "title_alphanumeric_jaccard",
+    "title_number_jaccard",
+    "title_numbers_both_present",
+    "title_compact_exact",
+    "code_left_missing_or_right_missing",
+    "code_both_present",
+    "code_exact_overlap",
+    "code_set_jaccard",
+    "code_best_edit_similarity",
+    "code_same_letters_different_digits",
+    "code_same_digits_different_letters",
+    "code_one_edit_difference",
+    "native_model_missing_any",
+    "native_model_both_present",
+    "native_model_compact_exact",
+    "native_model_edit_similarity",
+    "native_model_char3_jaccard",
+    "native_model_same_letters_different_digits",
+    "native_model_same_digits_different_letters",
+    "cross_native_title_any",
+    "cross_native_title_both",
+    "native_category_both_present",
+    "native_category_token_jaccard",
+    "native_category_exact"
+  ],
+  "groups": [
+    {
+      "name": "business comparisons",
+      "count": 14
+    },
+    {
+      "name": "fit-only title evidence",
+      "count": 8
+    },
+    {
+      "name": "title model-code comparisons",
+      "count": 8
+    },
+    {
+      "name": "native model/category comparisons",
+      "count": 12
+    }
+  ]
+}

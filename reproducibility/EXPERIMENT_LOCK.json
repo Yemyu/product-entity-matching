@@ -1,0 +1,50 @@
+{
+  "schema": "product-matching-final-experiment-v1",
+  "model": {
+    "name": "C+",
+    "backbone": "FacebookAI/roberta-base",
+    "revision": "e2da8e2f811d1448a5b465c236feacd80ffbac7b",
+    "lexical_features": 42,
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "epoch": 4,
+    "aggregation": "equal_probability_mean"
+  },
+  "roles": {
+    "fit": 3738,
+    "dev": 199,
+    "calibration": 209,
+    "evaluation": 555
+  },
+  "threshold": 0.3947772259513537,
+  "threshold_role": "calibration",
+  "idf_role": "fit",
+  "epoch_selection_role": "dev",
+  "evaluation_input_labels": false,
+  "reference_widths": {
+    "B22": 22,
+    "L30": 30,
+    "S33": 33,
+    "L42": 42
+  },
+  "evaluation_scope": "retrospective_fixed_pool",
+  "fresh_sample_validation": false,
+  "snapshots_redistributed": false,
+  "datasets_redistributed": false,
+  "weights_redistributed": false,
+  "observed_environment": {
+    "python": "3.11.16",
+    "platform": "Windows 11",
+    "gpu": "RTX 3060 laptop",
+    "torch": "2.8.0+cu126",
+    "cuda": "12.6",
+    "transformers": "5.17.0",
+    "sentence-transformers": "6.0.1",
+    "scikit-learn": "1.9.1",
+    "numpy": "2.4.6",
+    "safetensors": "0.8.0"
+  }
+}

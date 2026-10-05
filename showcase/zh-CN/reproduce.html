@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="环境配置、标准库检查、模型命令的输入输出及已核对的现有权重回放。">
+  <meta name="theme-color" content="#f5efe4">
+  <title>复现 · 商品实体匹配</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="alternate" hreflang="en" href="../en/reproduce.html">
+  <link rel="alternate" hreflang="zh-CN" href="../zh-CN/reproduce.html">
+  <link rel="stylesheet" href="../assets/vendor/bulma.min.css">
+  <link rel="stylesheet" href="../assets/academic.css">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script defer src="../assets/site.js"></script>
+</head>
+<body data-page="reproduce" data-language="zh-CN">
+  <a class="skip-link" href="#main-content">跳到正文</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html" aria-label="商品实体匹配"><span class="brand-mark" aria-hidden="true">↔</span><span>商品实体匹配</span></a>
+      <nav aria-label="主导航"><a class="nav-link" href="index.html">项目概览</a><a class="nav-link" href="method.html">数据与方法</a><a class="nav-link" href="results.html">实验结果</a><a class="nav-link" href="reproduce.html" aria-current="page">复现</a></nav>
+      <a class="language-link" href="../en/reproduce.html" lang="en" hreflang="en" aria-label="以英文阅读当前页面">English<span aria-hidden="true"> ↗</span></a>
+    </div>
+  </header>
+  <div class="report-layout">
+    <aside class="report-sidebar"><p class="toc-label">本页内容</p><nav aria-label="页内目录"><a href="#quickstart"><span>01</span>环境配置与快速开始</a><a href="#public-checks"><span>02</span>检查公开代码与保存输出</a><a href="#command-flow"><span>03</span>命令的输入与输出</a><a href="#replay"><span>04</span>已核对的现有权重准备与预测</a><a href="#fresh-training"><span>05</span>原实验输入与从头训练</a><a href="#resources"><span>06</span>源码、配置与技术文档</a><a href="#rebuild"><span>07</span>本地静态页面生成</a></nav></aside>
+    <main id="main-content" tabindex="-1">
+      <!-- Publication header and resource links adapted from the Academic template. -->
+      <section class="hero publication-header" id="intro">
+        <div class="hero-body">
+          <div class="container">
+            <p class="eyebrow">代码与复现</p>
+            <h1 class="title is-1 publication-title">环境配置、快速开始与模型复现</h1>
+            <p class="hero-description">先运行标准库检查并预览本地网站。模型复现指南说明原始输入重建、所需本地模型文件及预测命令。现有权重回放已通过；从头重新训练仍未验收。</p>
+            <p class="model-definition">C+ 是本项目最终模型的简称：RoBERTa 融合 42 项比较特征，再平均三个训练种子的预测概率。</p>
+            <div class="publication-links"><a href="#quickstart" class="external-link button is-normal is-dark">快速开始</a><a href="../../docs/zh-CN/CORE_USAGE.md" class="external-link button is-normal is-light">命令指南</a></div>
+
+          </div>
+        </div>
+      </section>
+      <section id="quickstart" class="section section-rule"><div class="container"><div class="section-heading"><span class="section-number" aria-hidden="true">01</span><h2 class="title is-3">环境配置与快速开始</h2></div><p class="section-intro">先安装 Git 和 Python 3.11 或更高版本，再克隆仓库。下方检查和本地网页预览只使用 Python 标准库；项目虚拟环境将后续依赖与其他项目分开。</p><div class="command-block"><pre id="clone-command"><code>git clone https://github.com/Yemyu/product-entity-matching.git
+cd product-entity-matching</code></pre><button class="copy-button" type="button" data-copy-target="clone-command" data-copy-status="clone-command-status" hidden>复制命令</button></div><span class="copy-status" id="clone-command-status" role="status" aria-live="polite"></span><h3>macOS / Linux</h3><div class="command-block"><pre id="setup-unix"><code>python3 -m venv .venv
+source .venv/bin/activate
+python scripts/public_smoke.py
+python -m http.server 8000 --bind 127.0.0.1</code></pre><button class="copy-button" type="button" data-copy-target="setup-unix" data-copy-status="setup-unix-status" hidden>复制命令</button></div><span class="copy-status" id="setup-unix-status" role="status" aria-live="polite"></span><h3>Windows · PowerShell</h3><div class="command-block"><pre id="setup-windows"><code>py -3 -m venv .venv
+.\.venv\Scripts\python.exe scripts/public_smoke.py
+.\.venv\Scripts\python.exe -m http.server 8000 --bind 127.0.0.1</code></pre><button class="copy-button" type="button" data-copy-target="setup-windows" data-copy-status="setup-windows-status" hidden>复制命令</button></div><span class="copy-status" id="setup-windows-status" role="status" aria-live="polite"></span><p>冒烟检查会输出 status 为 passed 的 JSON 报告。保持服务器运行，在浏览器打开下方本地项目页；按 Ctrl+C 可停止服务器。</p><a href="http://127.0.0.1:8000/showcase/zh-CN/index.html" class="text-link">打开本地项目页</a><p class="caption">下文的 python 指 macOS/Linux 中已激活的项目解释器。Windows 请将 python 替换为 .\.venv\Scripts\python.exe。若通过 ZIP 下载仓库，进入解压后的仓库目录，从环境创建命令开始即可。</p><p>准备真实模型输入或运行预测，还需在本地提供商品数据、模型快照和检查点，并在独立项目环境中安装固定的神经网络依赖。文档中的 CUDA 配置已在 Windows 11 的 RTX 3060 上检查。</p><a href="../../docs/zh-CN/REPRODUCIBILITY.md" class="text-link">GPU 依赖与所需本地文件</a></div></section><section id="public-checks" class="section section-rule"><div class="container"><div class="section-heading"><span class="section-number" aria-hidden="true">02</span><h2 class="title is-3">检查公开代码与保存输出</h2></div><p class="section-intro">配置好上方环境后，在仓库根目录运行以下检查。程序用合成记录检查输入接口、特征计算和指标算术，并核对保存的聚合结果；无需下载模型或使用 GPU。</p><article class="reproduction-step"><div class="step-index" aria-hidden="true">01</div><div><h3>接口、保存输出与文件检查</h3><p>public_smoke.py 检查程序包和命令入口；run_notebook.py 运行中英文可执行讲解并核对保存输出；verify_public_release.py 检查公开文件清单、哈希、本地链接与结果算术。passed 表示这些代码和文档检查通过，程序没有运行模型推断。</p><div class="command-block"><pre id="public-command-1"><code>python scripts/public_smoke.py
+python scripts/run_notebook.py
+python scripts/verify_public_release.py</code></pre><button class="copy-button" type="button" data-copy-target="public-command-1" data-copy-status="public-command-1-status" hidden>复制命令</button></div><span class="copy-status" id="public-command-1-status" role="status" aria-live="polite"></span></div></article><article class="reproduction-step"><div class="step-index" aria-hidden="true">02</div><div><h3>CLI 帮助与合成输入约定测试</h3><p>帮助命令列出显式的数据准备、训练与预测入口；测试集检查合成用例。通过这些测试与复现模型实验，是不同的验收。</p><div class="command-block"><pre id="public-command-2"><code>python scripts/matching.py --help
+python scripts/run_tests.py</code></pre><button class="copy-button" type="button" data-copy-target="public-command-2" data-copy-status="public-command-2-status" hidden>复制命令</button></div><span class="copy-status" id="public-command-2-status" role="status" aria-live="polite"></span></div></article></div></section><section id="command-flow" class="section section-rule"><div class="container"><div class="section-heading"><span class="section-number" aria-hidden="true">03</span><h2 class="title is-3">命令的输入与输出</h2></div><p class="section-intro">以下命令连接商品对准备、模型训练、预测与评价。实际运行需要本地商品输入、固定依赖及模型文件；命令指南给出了各阶段的文件格式和完整参数。</p><div class="table-wrap"><table><thead><tr><th scope="col">命令阶段</th><th scope="col">输入</th><th scope="col">处理</th><th scope="col">输出</th></tr></thead><tbody><tr><th scope="row"><code>project-role</code></th><td>保留ID、业务视图和原生字段</td><td>按固定用途投影，拒绝多余字段</td><td>用途明确的商品对JSON</td></tr><tr><th scope="row"><code>prepare</code></th><td>商品对JSON；非fit复用训练IDF</td><td>构造x42与AB/BA token；非fit输入不带标签</td><td>特征、token与准备回执</td></tr><tr><th scope="row"><code>train</code></th><td>训练用途输入、可信模型快照、种子</td><td>更新编码器和分类头，保存各轮检查点</td><td>检查点及训练记录</td></tr><tr><th scope="row"><code>predict / select-epoch</code></th><td>检查点、开发输入及独立开发标签</td><td>先预测，再依pair ID接标签选择共同轮数</td><td>预测分数与共同E4</td></tr><tr><th scope="row"><code>calibrate / evaluate</code></th><td>校准分数与校准标签；评价分数与评价标签</td><td>校准锁定阈值，评价复用该阈值</td><td>阈值文件与聚合指标</td></tr></tbody></table></div><a href="../../docs/zh-CN/CORE_USAGE.md" class="text-link">命令指南</a></div></section><section id="replay" class="section section-rule"><div class="container"><div class="section-heading"><span class="section-number" aria-hidden="true">04</span><h2 class="title is-3">已核对的现有权重准备与预测</h2></div><p class="section-intro">公开代码入口使用原固定输入和本地模型产物运行了 20 条命令，23 组独立核对结果与保存输出一致，最大预测差为 0.0。回放覆盖输入准备与已有模型预测，没有拟合新权重，也没有评价Walmart–Amazon 独立新样本。</p><ul class="replay-list"><li>准备好的token、42项特征与仅用训练数据拟合的IDF状态</li><li>固定MiniLM语义特征与四种对照方法的预测</li><li>三个种子的预测与最终集成概率</li></ul><p class="caption">观察到的环境：Windows 11、Python 3.11.16、PyTorch 2.8.0+cu126与RTX 3060笔记本。其他GPU平台尚未验证。聚合记录保存于fixed-results.json。</p></div></section><section id="fresh-training" class="section section-rule section-tint"><div class="container"><div class="section-heading"><span class="section-number" aria-hidden="true">05</span><h2 class="title is-3">原实验输入与从头训练</h2></div><div class="prose"><p>reconstruct-roles 核对原 ZIP 后，恢复四份与冻结文件逐字节一致的角色输入，保留原生字段置空标记。配方只含源位置与哈希，没有商品值或标签。GPU 回放仍需本地快照和可信权重；从头训练与Walmart–Amazon 独立新样本评价尚未验收。</p><p>按适用条款在本地提供产物，使用项目环境。训练数据估计参数与 IDF，开发数据选轮数，校准数据选阈值；评价标签与模型输入分离，不用于选择这些设置。接口检查不能补全保存评价池的历史接触记录。</p></div></div></section><section id="resources" class="section section-rule"><div class="container"><div class="section-heading"><span class="section-number" aria-hidden="true">06</span><h2 class="title is-3">源码、配置与技术文档</h2></div><div class="resource-list"><a href="../../docs/zh-CN/PROJECT_CARD.md"><span>项目说明</span><span aria-hidden="true">↗</span></a><a href="../../docs/zh-CN/DATA_CARD.md"><span>数据说明</span><span aria-hidden="true">↗</span></a><a href="../../docs/zh-CN/MODEL_CARD.md"><span>模型说明</span><span aria-hidden="true">↗</span></a><a href="../../docs/zh-CN/CORE_USAGE.md"><span>命令指南</span><span aria-hidden="true">↗</span></a><a href="../../docs/zh-CN/REPRODUCIBILITY.md"><span>复现说明</span><span aria-hidden="true">↗</span></a><a href="../../docs/zh-CN/LIMITATIONS.md"><span>局限说明</span><span aria-hidden="true">↗</span></a><a href="../../docs/zh-CN/CODE_MAP.md"><span>代码地图</span><span aria-hidden="true">↗</span></a><a href="../../results/fixed-results.json"><span>机器可读结果</span><span aria-hidden="true">↗</span></a><a href="../../reproducibility/FINAL_MODEL.json"><span>最终模型配置</span><span aria-hidden="true">↗</span></a><a href="../../reproducibility/FEATURES.json"><span>特征顺序</span><span aria-hidden="true">↗</span></a></div><p class="caption"><a href="https://github.com/Yemyu/product-entity-matching/tree/main/src/product_matching" class="text-link">公开模型源码目录</a></p></div></section><section id="rebuild" class="section section-rule"><div class="container"><div class="section-heading"><span class="section-number" aria-hidden="true">07</span><h2 class="title is-3">本地静态页面生成</h2></div><p class="section-intro">标准库生成器读取保存的聚合结果、最终模型配置、特征顺序和双语文案，生成八份完整 HTML 与结果 CSV。该命令生成文档，不获取商品数据，也不加载模型。</p><div class="command-block"><pre id="build-command"><code>python scripts/build_showcase.py
+python scripts/build_showcase.py --check</code></pre><button class="copy-button" type="button" data-copy-target="build-command" data-copy-status="build-command-status" hidden>复制命令</button></div><span class="copy-status" id="build-command-status" role="status" aria-live="polite"></span><p class="caption">检查命令只在内存中生成并逐字节比较，不写文件。</p></div></section>
+      <div class="reading-next container"><a class="next-link" href="index.html"><span><span class="next-eyebrow">继续阅读</span>项目概览</span><span aria-hidden="true">→</span></a></div>
+    </main>
+  </div>
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div><a class="footer-project" href="index.html">商品实体匹配</a><p>RoBERTa 商品配对评分与固定池回顾性比较。</p></div>
+      <div class="footer-credit"><p>基于 <a href="https://github.com/eliahuhorwitz/Academic-project-page-template">Academic Project Page Template</a> 改编；原模板源自 <a href="https://nerfies.github.io/">Nerfies</a>。本站修改了布局、样式与导航。</p><p>网站派生部分：<a href="../LICENSE">CC BY-SA 4.0</a>。模型代码：<a href="../../LICENSE">MIT</a>。数据与第三方模型遵循各自条款。</p><a href="../NOTICE.md">模板来源与许可说明</a></div>
+    </div>
+  </footer>
+</body>
+</html>

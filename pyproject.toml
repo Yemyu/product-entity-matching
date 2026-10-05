@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "product-entity-matching"
+version = "0.2.0"
+description = "Auditable data and model comparison for product entity matching"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+train = [
+  "numpy==2.4.6",
+  "scikit-learn==1.9.1",
+  "safetensors==0.8.0",
+  "sentence-transformers==6.0.1",
+  "transformers==5.17.0",
+  "torch==2.8.0+cu126",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
